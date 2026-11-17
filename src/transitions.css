@@ -1,0 +1,99 @@
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  :root {
+    --page-enter-y: 16px;
+    --page-exit-y: -10px;
+    --chapter-drift: clamp(9px, 1.55vw, 24px);
+  }
+
+  :root.archive-home {
+    --page-enter-y: -14px;
+    --page-exit-y: 10px;
+  }
+
+  ::view-transition-group(root) {
+    animation-duration: 380ms;
+    animation-timing-function: cubic-bezier(.2, .7, .23, 1);
+  }
+
+  ::view-transition-old(root) {
+    animation: page-leave 280ms cubic-bezier(.3, .15, .5, 1) both;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-new(root) {
+    animation: page-arrive 380ms cubic-bezier(.2, .7, .23, 1) both;
+    mix-blend-mode: normal;
+  }
+
+  @supports (animation-timeline: view()) {
+    .archive-home :is(.section-head, .essay-copy h2, .connection h2, .dis-heading h2, .cap-heading h2, .growth-heading h3) {
+      animation: chapter-arrive linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 28%;
+    }
+
+    .archive-home :is(.essay-illustration, .connection-orbit) {
+      animation: chapter-parallax linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+
+  @supports (transition-behavior: allow-discrete) {
+    :is(.rc-dialog, .crawler-dialog) {
+      opacity: 0;
+      transform: translateY(10px) scale(.985);
+      transition:
+        opacity 190ms ease,
+        transform 230ms cubic-bezier(.2, .7, .23, 1),
+        overlay 230ms allow-discrete,
+        display 230ms allow-discrete;
+    }
+
+    :is(.rc-dialog, .crawler-dialog)[open] {
+      opacity: 1;
+      transform: none;
+    }
+
+    :is(.rc-dialog, .crawler-dialog)::backdrop {
+      opacity: 0;
+      transition: opacity 190ms ease, overlay 230ms allow-discrete, display 230ms allow-discrete;
+    }
+
+    :is(.rc-dialog, .crawler-dialog)[open]::backdrop { opacity: 1; }
+
+    @starting-style {
+      :is(.rc-dialog, .crawler-dialog)[open] {
+        opacity: 0;
+        transform: translateY(10px) scale(.985);
+      }
+
+      :is(.rc-dialog, .crawler-dialog)[open]::backdrop { opacity: 0; }
+    }
+  }
+}
+
+@keyframes chapter-arrive {
+  from { opacity: .74; translate: 0 16px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@keyframes chapter-parallax {
+  from { translate: 0 var(--chapter-drift); }
+  to { translate: 0 calc(-1 * var(--chapter-drift)); }
+}
+
+@keyframes page-leave {
+  from { opacity: 1; transform: none; }
+  to { opacity: .1; transform: translateY(var(--page-exit-y)); }
+}
+
+@keyframes page-arrive {
+  from { opacity: 0; transform: translateY(var(--page-enter-y)); }
+  to { opacity: 1; transform: none; }
+}
+

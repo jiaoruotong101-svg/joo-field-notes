@@ -1,0 +1,116 @@
+.project-page-huahua { padding-top: 23px; }
+.project-page-huahua .back { margin-bottom: 23px; }
+.project-page-huahua h1 { font-size: clamp(44px, 6.25vw, 92px); letter-spacing: -.062em; }
+.hua-demo {
+  --hua-line: #a3bde53b;
+  --hua-soft: #b7c9df;
+  --hua-ink: #edf6ff;
+  margin: clamp(25px, 4vw, 49px) 0 clamp(45px, 7vw, 94px);
+  color: var(--hua-ink);
+}
+.hua-heading { margin-bottom: 19px; }
+.hua-heading h2 { font-size: clamp(36px, 4.6vw, 68px); letter-spacing: -.063em; }
+.hua-heading p { margin-top: 9px; color: var(--hua-soft); }
+.hua-console { display: grid; grid-template-columns: minmax(0, 2.5fr) minmax(245px, .9fr); border: 1px solid var(--hua-line); }
+.hua-stage {
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  position: relative;
+  min-height: clamp(340px, 34vw, 490px);
+  overflow: hidden;
+  background: radial-gradient(ellipse at 49% 48%, #352c57 0%, #192843 42%, #0a192e 76%);
+  touch-action: pan-y pinch-zoom;
+}
+.hua-sky, .hua-floor, .hua-ground { pointer-events: none; position: absolute; }
+.hua-sky {
+  inset: 0;
+  opacity: .62;
+  background:
+    radial-gradient(circle at 19% 27%, #ffbec8 0 1px, transparent 2px),
+    radial-gradient(circle at 34% 18%, #bce0fd 0 1px, transparent 2.5px),
+    radial-gradient(circle at 78% 31%, #ffc9d3 0 1px, transparent 2px),
+    radial-gradient(circle at 85% 56%, #bce0fd 0 1px, transparent 2px),
+    radial-gradient(circle at 23% 63%, #bce0fd 0 1px, transparent 2px),
+    radial-gradient(circle at 64% 21%, #bce0fd 0 1px, transparent 2px),
+    radial-gradient(circle at 71% 62%, #ffc9d3 0 1px, transparent 2px),
+    radial-gradient(circle at 1px 1px, #9fbde338 1px, transparent 1.6px) 0 0 / 36px 36px;
+  mask-image: radial-gradient(ellipse at 50% 51%, #0000 15%, #000 68%);
+}
+.hua-floor {
+  width: min(70%, 690px);
+  height: 21%;
+  bottom: 12%;
+  border: 1px solid #b9addc49;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #ef99ae1a, #19315324 60%, transparent 74%);
+}
+.hua-floor::before, .hua-floor::after { content: ''; position: absolute; border-radius: 50%; border: 1px solid #a792c534; }
+.hua-floor::before { inset: 14% 9%; }
+.hua-floor::after { inset: 29% 23%; }
+.hua-ground { width: min(29%, 225px); height: 34px; bottom: 18.5%; border-radius: 50%; background: #080d20cc; filter: blur(9px); transition: transform .15s ease; }
+.hua-stage[data-action='jump'][data-still='false'] .hua-ground { transform: scale(.77); }
+.hua-pet {
+  width: clamp(155px, 19vw, 285px);
+  aspect-ratio: 12 / 13;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: stretch;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 20px;
+  -webkit-tap-highlight-color: #f8a7bf26;
+}
+.hua-pet:focus-visible { outline-offset: 5px; }
+.hua-pet:disabled { cursor: default; }
+.hua-sprite {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-size: 800% 1100%;
+  background-repeat: no-repeat;
+  transform: translateY(var(--hua-hop, 0%));
+  transition: transform .105s ease-out;
+  filter: drop-shadow(0 8px 16px #060d23a0);
+  pointer-events: none;
+}
+.hua-stage:not([data-asset='ready']) .hua-sprite { visibility: hidden; }
+.hua-loading { position: absolute; bottom: 22px; color: var(--hua-soft); }
+.hua-controls { display: flex; flex-direction: column; justify-content: center; gap: 22px; min-width: 0; padding: clamp(17px, 2.8vw, 37px); background: #0e1d33; border-left: 1px solid var(--hua-line); }
+.hua-state h3 { margin: 6px 0 0; font-size: clamp(23px, 2.5vw, 38px); font-weight: 600; letter-spacing: -.06em; }
+.hua-label { color: var(--hua-soft); text-transform: uppercase; }
+.hua-gaze { display: flex; align-items: center; gap: 13px; }
+.hua-gaze p + p { margin-top: 4px; font-variant-numeric: tabular-nums; }
+.hua-compass { position: relative; width: 60px; height: 60px; flex: none; border-radius: 50%; border: 1px solid var(--hua-line); }
+.hua-compass i { position: absolute; top: 6px; left: calc(50% - 1.5px); width: 3px; height: 3px; border-radius: 50%; transform-origin: 50% 23px; transform: rotate(var(--hua-angle)); background: #8ea7c0; }
+.hua-compass i.hua-tick-active { background: #ff9eaf; box-shadow: 0 0 8px #ff9eafbd; }
+.hua-compass span { position: absolute; width: 5px; height: 5px; top: 50%; left: 50%; border-radius: 50%; transform: translate(-50%, -50%); background: #cedef4; }
+.hua-actions { display: flex; flex-wrap: wrap; gap: 7px; }
+.hua-button {
+  min-height: 44px;
+  padding: 6px 12px;
+  cursor: pointer;
+  color: #1a2031;
+  background: #f2a2b3;
+  border: 1px solid #f2a2b3;
+}
+.hua-pause { color: var(--hua-ink); background: #152741; border-color: #a3bde55a; }
+.hua-button:not(:disabled):hover { border-color: #ffd4de; }
+.hua-button:disabled { opacity: .55; cursor: default; }
+.hua-motion-note, .hua-credit { color: var(--hua-soft); font-size: 13px; line-height: 1.5; }
+.hua-credit { padding-top: 13px; }
+.hua-credit a { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 760px) {
+  .hua-console { grid-template-columns: 1fr; }
+  .hua-controls { border: 0; border-top: 1px solid var(--hua-line); gap: 17px; }
+  .hua-pet { width: clamp(170px, 35vw, 250px); }
+}
+@media (max-width: 420px) {
+  .hua-stage { min-height: 310px; }
+  .hua-floor { bottom: 14%; }
+}
+@media (prefers-reduced-motion: reduce) { .hua-ground, .hua-sprite { transition: none; } }

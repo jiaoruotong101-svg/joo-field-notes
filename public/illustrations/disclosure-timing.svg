@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="296" viewBox="0 0 480 296" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="15" y1="0" x2="446" y2="303" gradientUnits="userSpaceOnUse"><stop stop-color="#132c43"/><stop offset="1" stop-color="#0a1729"/></linearGradient>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M0 20V0H20" stroke="#88acd4" stroke-opacity=".13"/></pattern>
+    <g id="pulse"><path d="M-19 0h9l5-7 7 15 6-8h11" stroke="#ff9eaa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle r="18" fill="#f25767" fill-opacity=".10" stroke="#f25767" stroke-opacity=".38"/></g>
+  </defs>
+  <rect x=".5" y=".5" width="479" height="295" fill="url(#bg)" stroke="#435a73"/>
+  <rect x="16" y="16" width="448" height="264" fill="url(#grid)" opacity=".7"/>
+  <path d="M185 51v190m79-190v190m76-190v190m79-190v190" stroke="#7f9fc4" stroke-opacity=".23" stroke-dasharray="3 6"/>
+  <g fill="#e8f2ff" font-family="monospace" font-size="14">
+    <text x="30" y="96">Before</text>
+    <text x="30" y="151">During</text>
+    <text x="30" y="206">After</text>
+  </g>
+  <g stroke="#83a4c4" stroke-opacity=".55">
+    <path d="M110 91h329m-329 55h329m-329 55h329"/>
+    <path d="m433 86 6 5-6 5m0 45 6 5-6 5m0 45 6 5-6 5"/>
+  </g>
+  <rect x="264" y="66" width="76" height="160" fill="#a9cbeb" fill-opacity=".07" stroke="#afcae5" stroke-opacity=".44"/>
+  <g fill="#b8cde4" font-family="monospace" font-size="14">
+    <text x="301" y="52" text-anchor="middle">DECISION</text>
+    <text x="107" y="253">PROCESS START</text>
+    <text x="437" y="253" text-anchor="end">PROCESS END</text>
+  </g>
+  <g stroke="#adcee9" stroke-width="1.3"><path d="M110 247v-15m329 15v-15"/><path d="M114 262h320" stroke-opacity=".37"/></g>
+  <use href="#pulse" x="185" y="91"/><use href="#pulse" x="303" y="146"/><use href="#pulse" x="419" y="201"/>
+  <path d="M16 30V16h14m420 0h14v14M16 266v14h14m420 0h14v-14" stroke="#7193b6"/>
+</svg>

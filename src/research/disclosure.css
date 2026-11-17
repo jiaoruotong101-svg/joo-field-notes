@@ -1,0 +1,88 @@
+.disclosure {
+  --dis-line: #9cbbdb3a;
+  --dis-muted: #b6c6dd;
+  --dis-ink: #ecf4fc;
+  --dis-panel: #0d1e33;
+  padding-block: clamp(36px, 6vw, 84px);
+  border-bottom: 1px solid var(--rule);
+  scroll-margin-top: 20px;
+  color: var(--dis-ink);
+}
+.dis-heading { display: flex; gap: 16px; justify-content: space-between; align-items: end; margin-bottom: 23px; }
+.dis-heading h2 { font-size: clamp(37px, 5vw, 78px); letter-spacing: -.067em; }
+.dis-heading div p, .dis-feedback-heading p { color: var(--dis-muted); margin-top: 9px; max-width: 57ch; }
+.dis-sim { display: flex; align-items: center; gap: 8px; color: #ffb4bf; flex-shrink: 0; }
+.dis-sim span { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+.dis-conditions, .dis-question { min-width: 0; border: 0; margin: 0; padding: 0; }
+.dis-conditions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.dis-conditions legend { color: var(--dis-muted); padding: 0 0 7px; }
+.dis-conditions label, .dis-question label { position: relative; display: inline-block; }
+.dis-conditions input, .dis-question input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.dis-conditions label span, .dis-question label span {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  padding: 5px 13px;
+  border: 1px solid var(--dis-line);
+  background: #0e1e32;
+  cursor: pointer;
+  font-size: 13px;
+}
+.dis-conditions input:checked + span, .dis-question input:checked + span { border-color: #f69aa6; background: #f69aa624; color: #ffe8ec; }
+.dis-conditions input:focus-visible + span, .dis-question input:focus-visible + span, .dis-explanation h3:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
+.dis-console { border: 1px solid var(--dis-line); background: var(--dis-panel); }
+.dis-track { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--dis-line); }
+.dis-track li { display: flex; align-items: center; gap: 9px; padding: clamp(8px, 1.4vw, 17px); min-height: 49px; font-size: 13px; color: var(--dis-muted); }
+.dis-track li + li { border-left: 1px solid var(--dis-line); }
+.dis-track li[aria-current='step'] { color: var(--dis-ink); box-shadow: inset 0 -2px #f69aa6; background: #f08e971a; }
+.dis-step { color: var(--dis-muted); }
+.dis-track li[data-passed='true'] .dis-step { color: #a8e6d4; }
+.dis-track li[aria-current='step'] .dis-step { color: #ffb4bf; }
+.dis-columns { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); }
+.dis-scenario, .dis-explanation { padding: clamp(16px, 2.4vw, 34px); }
+.dis-explanation {
+  border-left: 1px solid var(--dis-line);
+  background: radial-gradient(ellipse at 90% 0%, #26364e 0%, #102239 48%, #0e1e32 100%);
+}
+.disclosure h3 { margin: 7px 0 9px; font-size: clamp(23px, 2.45vw, 36px); letter-spacing: -.045em; line-height: 1.1; font-weight: 620; }
+.dis-caption { color: var(--dis-muted); text-transform: uppercase; }
+.dis-scenario p:not(.dis-caption), .dis-explanation p:not(.dis-caption, .dis-reveal) { color: var(--dis-muted); line-height: 1.47; }
+.dis-event { display: grid; align-content: center; min-height: 110px; padding: 12px 15px; margin-top: 19px; border-left: 2px solid #f69aa6; background: #08162a; }
+.dis-event .dis-caption { margin-bottom: 5px; }
+.dis-event strong { display: block; margin-bottom: 3px; }
+.dis-explanation .dis-reveal { margin: 12px 0 9px; color: #ffabb7; }
+.dis-explanation .dis-reason { font-size: 17px; max-width: 51ch; }
+.dis-explanation .dis-wait { margin-top: 12px; }
+.dis-appear { animation: dis-reveal .36s cubic-bezier(.19,.67,.28,1) both; }
+@keyframes dis-reveal { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.dis-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 15px; }
+.dis-run-actions { justify-content: flex-end; margin: 0; padding: 10px clamp(16px, 2.4vw, 34px); border-top: 1px solid var(--dis-line); }
+.dis-button { min-height: 44px; padding: 7px 14px; border: 1px solid var(--dis-line); background: #112740; color: var(--dis-ink); cursor: pointer; }
+.dis-primary:not(:disabled) { background: #f6a1ae; border-color: #f6a1ae; color: #181c2a; }
+.dis-primary:not(:disabled):hover { background: #ffc0cb; }
+.dis-button:disabled, .dis-reset:disabled { opacity: .58; cursor: default; }
+.dis-feedback { margin: 14px 0 0; padding: clamp(16px, 2.4vw, 29px); border: 1px solid var(--dis-line); background: #0f2237; }
+.dis-feedback-heading { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 17px; }
+.dis-feedback-heading h3 { margin-top: 0; }
+.dis-feedback-heading .dis-scale { color: #f4b2bf; }
+.dis-questions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 16px; padding-top: 15px; border-top: 1px solid var(--dis-line); }
+.dis-question legend { padding: 0; font-size: 16px; font-weight: 620; }
+.dis-question p { color: var(--dis-muted); margin-top: 5px; font-size: 14px; line-height: 1.4; }
+.dis-question > div { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+.dis-question label span { min-width: 44px; padding-inline: 6px; }
+.dis-feedback-actions { justify-content: space-between; border-top: 1px solid var(--dis-line); padding-top: 12px; color: var(--dis-muted); }
+.dis-footer { display: flex; justify-content: flex-end; margin-top: 6px; font-size: 13px; }
+.dis-reset { min-height: 44px; padding: 0; border: 0; background: none; color: var(--dis-ink); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 850px) {
+  .dis-questions { grid-template-columns: 1fr; gap: 15px; }
+  .dis-question { padding-bottom: 13px; border-bottom: 1px solid var(--dis-line); }
+  .dis-question:last-child { border-bottom: 0; padding-bottom: 0; }
+}
+@media (max-width: 590px) {
+  .dis-heading { align-items: flex-start; flex-direction: column; }
+  .dis-columns { grid-template-columns: 1fr; }
+  .dis-explanation { border: 0; border-top: 1px solid var(--dis-line); }
+  .dis-track li { align-items: start; flex-direction: column; gap: 4px; }
+  .dis-conditions label span { padding-inline: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .dis-appear { animation: none; } }

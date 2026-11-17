@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="296" viewBox="0 0 480 296" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="20" y1="-25" x2="420" y2="296" gradientUnits="userSpaceOnUse"><stop stop-color="#102b40"/><stop offset="1" stop-color="#0a172a"/></linearGradient>
+    <pattern id="gap" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M-2 2 2-2M0 9l9-9m-2 11 4-4" stroke="#ff9eaa" stroke-opacity=".23"/></pattern>
+    <linearGradient id="film" x1="32" y1="32" x2="444" y2="95" gradientUnits="userSpaceOnUse"><stop stop-color="#436b7a"/><stop offset=".55" stop-color="#294b5c"/><stop offset="1" stop-color="#12263a"/></linearGradient>
+  </defs>
+  <rect x=".5" y=".5" width="479" height="295" fill="url(#bg)" stroke="#435a73"/>
+  <g stroke="#83a4c4" stroke-opacity=".23"><path d="M31 25v204m119-204v204m120-204v204m60-204v204m119-204v204"/><path d="M31 114h418m-418 45h418m-418 48h418"/></g>
+  <rect x="31" y="36" width="418" height="54" fill="url(#film)" stroke="#8fb6ca" stroke-opacity=".64"/>
+  <path d="M88 36v54m54-54v54m55-54v54m58-54v54m57-54v54m67-54v54" stroke="#a3c5dc" stroke-opacity=".44"/>
+  <path d="m31 73 26-16 26 22 33-30 24 18 32-13 28 15 26-13 33 18 24-27 32 25 33-10 29 14 35-24 38 17" stroke="#b4dce4" stroke-opacity=".48"/>
+  <path d="M31 128h13l6-4 6 9 7-16 7 26 7-23 8 11 8-4h19l6 5 7-10 8 14 8-16 8 10 8-2h17l8-7 7 15 8-22 8 18 7-6 7 2h20l8-8 7 16 9-23 7 21 9-13 8 7h16l8-5 7 12 8-19 8 22 8-18 8 11 7-5h13l8 6 7-14 8 20 8-24 9 17 8-5h15" stroke="#a5cbea" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#a6cde7" fill-opacity=".17" stroke="#9bbbd7" stroke-opacity=".58">
+    <rect x="31" y="170" width="118" height="27"/><rect x="150" y="170" width="119" height="27"/><rect x="330" y="170" width="119" height="27"/>
+  </g>
+  <path d="M44 184h60m58 0h65m115 0h75" stroke="#d2e5f4" stroke-opacity=".70"/>
+  <rect x="270" y="170" width="60" height="27" fill="url(#gap)" stroke="#ff8a9a" stroke-dasharray="4 3"/>
+  <path d="M270 238v8h60v-8m-30 8v9" stroke="#ff8a9a"/>
+  <g fill="#c5d9ee" font-family="monospace" font-size="14">
+    <text x="31" y="223">00:00</text><text x="150" y="223" text-anchor="middle">00:02</text>
+    <text x="270" y="223" text-anchor="middle">00:04</text><text x="330" y="223" text-anchor="middle">00:05</text>
+    <text x="449" y="223" text-anchor="end">00:07</text>
+    <text x="300" y="274" fill="#ff9eaa" text-anchor="middle">TIMESTAMP GAP</text>
+  </g>
+</svg>

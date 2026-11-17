@@ -1,0 +1,93 @@
+.human-chapter { border-bottom: 1px solid var(--rule); padding-bottom: clamp(48px, 7vw, 107px); }
+.human-chapter .human-intro { border-bottom: 0; padding-bottom: clamp(29px, 4vw, 63px); row-gap: 0; }
+.growth-timeline {
+  --growth-line: #9cbbdb43;
+  --growth-muted: #b7c8de;
+  --growth-ink: #edf4ff;
+  scroll-margin-top: 22px;
+}
+.growth-heading { margin-bottom: 16px; }
+.growth-heading h3 { margin: 0; font-size: clamp(31px, 4.5vw, 65px); font-weight: 600; letter-spacing: -.067em; line-height: 1; }
+.growth-heading p { margin-top: 8px; color: var(--growth-muted); }
+.growth-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(240px, 1fr);
+  align-items: stretch;
+  border: 1px solid var(--growth-line);
+  background: #0d1e32;
+}
+.growth-map { position: relative; align-self: center; min-width: 0; container-type: inline-size; aspect-ratio: 480 / 296; isolation: isolate; overflow: hidden; }
+.growth-map img { width: 100%; height: 100%; display: block; }
+.growth-aura {
+  position: absolute;
+  pointer-events: none;
+  width: 35%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, #f29aaf29, #f29aaf0b 47%, transparent);
+  transition: left .55s cubic-bezier(.2,.78,.22,1), top .55s cubic-bezier(.2,.78,.22,1);
+}
+.growth-node {
+  width: 44px;
+  height: 44px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  color: #e3efff;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: #f6acd52b;
+  z-index: 1;
+}
+.growth-node[aria-pressed='true'] { color: #ffc1cf; z-index: 2; }
+.growth-dot {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  width: clamp(18px, 4.2cqw, 24px);
+  aspect-ratio: 1;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: #0d1c2ecc;
+  box-shadow: 0 0 13px #8bc5f73b;
+  transition: background-color .2s ease, box-shadow .2s ease;
+}
+.growth-dot::before { content: ''; width: 6px; aspect-ratio: 1; border-radius: 50%; background: currentColor; }
+.growth-node:hover .growth-dot, .growth-node:focus-visible .growth-dot { background: #21364e; }
+.growth-node[aria-pressed='true'] .growth-dot { background: #38223d; box-shadow: 0 0 0 3px #f392ac3b, 0 0 19px #f392ac6e; }
+.growth-node:focus-visible { outline-offset: -3px; }
+.growth-map-label { position: absolute; white-space: nowrap; font-size: clamp(9px, 2.6cqw, 21px); color: currentColor; text-shadow: 0 1px 5px #091724, 0 1px 5px #091724; }
+.growth-node-research .growth-map-label { bottom: calc(50% + 17px); }
+.growth-node-projects .growth-map-label, .growth-node-huahua .growth-map-label { top: calc(50% + 17px); }
+.growth-note {
+  min-width: 0;
+  display: grid;
+  align-items: center;
+  padding: clamp(19px, 3vw, 48px);
+  border-left: 1px solid var(--growth-line);
+  background: radial-gradient(ellipse at top right, #182d46 0%, transparent 70%), #0d1e32;
+}
+.growth-copy { animation: growth-reveal .36s cubic-bezier(.2,.72,.25,1) both; }
+@keyframes growth-reveal { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.growth-copy h4 { margin: 0 0 13px; color: var(--growth-ink); font-size: clamp(27px, 3.3vw, 49px); font-weight: 610; line-height: 1.01; letter-spacing: -.06em; }
+.growth-copy p { max-width: 42ch; color: var(--growth-muted); line-height: 1.58; }
+.growth-copy ul { margin: 16px 0 0; padding: 0; list-style: none; }
+.growth-copy a {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 44px;
+  border-top: 1px solid var(--growth-line); color: var(--growth-ink); font-size: 14px;
+}
+.growth-copy a span { color: #ffb1bd; }
+.growth-copy a:hover { color: #ffb1bd; }
+@media (max-width: 740px) {
+  .growth-board { grid-template-columns: minmax(0, 1fr); }
+  .growth-note { border-left: 0; border-top: 1px solid var(--growth-line); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .growth-aura, .growth-dot { transition: none; }
+  .growth-copy { animation: none; }
+}

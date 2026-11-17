@@ -1,0 +1,73 @@
+.project-page-resume { padding-top: 23px; }
+.project-page-resume .back { margin-bottom: 23px; }
+.project-page-resume h1 { font-size: clamp(44px, 6.25vw, 92px); letter-spacing: -.062em; }
+.rc-demo {
+  --rc-rule: #9cbbdb3d;
+  --rc-muted: #b5c7dc;
+  --rc-panel: #0e2034;
+  --rc-ink: #edf6ff;
+  margin: clamp(25px, 4vw, 49px) 0 clamp(45px, 7vw, 98px);
+  color: var(--rc-ink);
+}
+.rc-heading { display: flex; justify-content: space-between; align-items: end; gap: 15px; margin-bottom: 19px; }
+.rc-heading h2 { font-size: clamp(37px, 4.6vw, 68px); letter-spacing: -.063em; }
+.rc-heading p { margin-top: 9px; color: var(--rc-muted); max-width: 52ch; }
+.rc-simulation { flex-shrink: 0; color: #ffb5bf; }
+.rc-workbench { display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1.1fr) minmax(0, .97fr); background: #0b192b; border: 1px solid var(--rc-rule); }
+.rc-workbench > section { min-width: 0; }
+.rc-workbench > section + section { border-left: 1px solid var(--rc-rule); }
+.rc-panel-title { margin: 0; padding: 16px clamp(12px, 1.7vw, 25px); border-bottom: 1px solid var(--rc-rule); text-transform: uppercase; color: #c6d9ee; }
+.rc-resume-sheet { margin: clamp(12px, 1.7vw, 24px); padding: clamp(14px, 1.8vw, 25px); background: #e2e8e6; color: #142b3b; }
+.rc-resume-sheet .rc-candidate { font-size: clamp(25px, 3.3vw, 47px); font-weight: 670; letter-spacing: -.07em; line-height: 1; padding: 4px 7px; margin: 0 -7px; }
+.rc-resume-sheet dl { margin: 14px 0 0; }
+.rc-resume-sheet dl > div { border-top: 1px solid #9eb0b9; padding: 11px 7px; margin: 0 -7px; }
+.rc-resume-sheet dt { font: 10px var(--mono); text-transform: uppercase; color: #465962; margin-bottom: 5px; }
+.rc-resume-sheet dd { margin: 0; font-size: 14px; line-height: 1.4; overflow-wrap: anywhere; }
+.rc-evidence { background: #f4cbd0; box-shadow: inset 2px 0 #b94c5d; }
+.rc-mapping { background: var(--rc-panel); }
+.rc-field-list button { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 43px; padding: 6px clamp(12px, 1.7vw, 25px); border: 0; border-bottom: 1px solid var(--rc-rule); background: transparent; text-align: left; cursor: pointer; font-size: 14px; }
+.rc-field-list button:hover { background: #b3d7ea13; }
+.rc-field-list button[aria-pressed='true'] { background: #f08e971a; box-shadow: inset 2px 0 var(--coral); }
+.rc-field-list button:focus-visible { outline-offset: -4px; }
+.rc-match { color: #a9decd; font-size: 9px; text-transform: uppercase; text-align: right; }
+.rc-match-review { color: #ffca9a; }
+.rc-inspect { padding: clamp(12px, 1.7vw, 25px); }
+.rc-inspect h4, .rc-form-body h4 { margin: 0 0 6px; font-size: 19px; font-weight: 600; }
+.rc-inspect blockquote { margin: 0 0 7px; padding: 5px 8px; border-left: 1px solid var(--coral); color: #e6f1ff; overflow-wrap: anywhere; font-size: 13px; }
+.rc-inspect p, .rc-dialog p { color: var(--rc-muted); line-height: 1.4; font-size: 13px; }
+.rc-value-label { display: block; font-size: 13px; margin: 14px 0 5px; }
+.rc-inspect textarea, .rc-output input, .rc-output textarea { display: block; width: 100%; padding: 8px; background: #081626; color: var(--rc-ink); border: 1px solid var(--rc-rule); border-radius: 0; font: inherit; font-size: 14px; }
+.rc-inspect textarea { resize: vertical; }
+.rc-inspect textarea:focus-visible, .rc-output :is(input,textarea):focus-visible, .rc-check input:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
+.rc-check { display: flex; align-items: center; gap: 7px; margin-top: 4px; min-height: 44px; font-size: 13px; cursor: pointer; }
+.rc-check input { margin: 0; accent-color: var(--coral); width: 16px; height: 16px; }
+.rc-form-body { padding: clamp(12px, 1.7vw, 25px); }
+.rc-form-count { color: var(--rc-muted); margin-bottom: 11px; }
+.rc-output { display: grid; gap: 4px; font-size: 12px; color: var(--rc-muted); margin-bottom: 7px; }
+.rc-output-current span { color: #ffb5bf; }
+.rc-output-current :is(input,textarea) { border-color: #f38c9c; }
+.rc-output textarea { resize: vertical; }
+.rc-actions, .rc-actions > div, .rc-dialog-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; }
+.rc-actions { justify-content: space-between; padding: 13px clamp(12px, 1.7vw, 25px); border-top: 1px solid var(--rc-rule); }
+.rc-status { color: var(--rc-muted); }
+.rc-button { padding: 8px 13px; min-height: 44px; background: #132740; color: var(--rc-ink); font: 11px var(--mono); border: 1px solid #a7bed674; cursor: pointer; }
+.rc-button:hover { border-color: var(--coral); }
+.rc-primary:not(:disabled) { color: #1c1c29; background: #f69aa6; border-color: #f69aa6; }
+.rc-button:disabled { color: var(--rc-muted); opacity: .62; cursor: default; }
+.rc-dialog { max-width: min(540px, 100% - 36px); max-height: calc(100% - 36px); padding: clamp(18px, 3vw, 30px); background: var(--rc-panel); color: var(--rc-ink); border: 1px solid #94aec7; }
+.rc-dialog::backdrop { background: #030c18d9; }
+.rc-dialog h3 { margin: 0 0 8px; font-size: 30px; letter-spacing: -.05em; }
+.rc-dialog dl { margin: 15px 0; }
+.rc-dialog dl > div { padding: 8px 0; border-bottom: 1px solid var(--rc-rule); }
+.rc-dialog dt { color: var(--rc-muted); font: 11px var(--mono); }
+.rc-dialog dd { margin: 4px 0 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.rc-dialog-actions { justify-content: end; }
+@media (max-width: 880px) {
+  .rc-workbench { grid-template-columns: minmax(0, .8fr) minmax(0, 1fr); }
+  .rc-workbench > .rc-form { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--rc-rule); }
+}
+@media (max-width: 560px) {
+  .rc-heading { flex-direction: column; align-items: start; }
+  .rc-workbench { grid-template-columns: minmax(0, 1fr); }
+  .rc-workbench > section + section { border-left: 0; border-top: 1px solid var(--rc-rule); }
+}
