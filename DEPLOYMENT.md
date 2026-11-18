@@ -42,3 +42,9 @@ Project-navigation acceptance: enter a detail from selected work and from a deep
 
 
 For the three-form opening, test Field → JOO → Orbit → Field, direct selections in both directions, quick interruption, drag without switching, and pause/resume. Check Enter/Space and focus without horizontal movement. Repeat with reduced motion and disabled WebGL and confirm the SVG dots are visible on a narrow viewport. The ice-blue transition dot should sit outside the cloud near the upper-right edge.
+
+## Current production deployment
+
+The live portfolio is https://joo-field-notes.vercel.app (alias: https://joo-field-notes-jdd12.vercel.app). It belongs to the Vercel project jdd12/joo-field-notes. The first production release deploys application commit 62a93e469c5ed418aeacaa8706d617a215762e8b from this repository.
+
+The release was uploaded using the authenticated Vercel CLI. GitHub automatic deployment is not connected: Vercel reported that the account first needs a GitHub Login Connection. Until that connection and repository integration are configured, pushing main updates GitHub only. Deploy future releases explicitly with vercel deploy --prod --scope jdd12 from the linked checkout after validation. Do not commit .vercel or login credentials.

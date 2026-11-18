@@ -1,5 +1,7 @@
 # JOO / FIELD NOTES
 
+Live site: https://joo-field-notes.vercel.app
+
 Phase 1–4 of an English-language interactive portfolio for JOO. The first page presents a live WebGL signal and leads into a six-chapter archive. Each of the five selected works has a direct URL and a repository link.
 
 ## Run locally
