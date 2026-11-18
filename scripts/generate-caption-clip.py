@@ -1,7 +1,6 @@
 """Render and encode the original 12-second silent caption QA fixture."""
-from math import sin, pi
+from math import sin
 from pathlib import Path
-import random
 import subprocess
 
 from imageio_ffmpeg import get_ffmpeg_exe
@@ -11,8 +10,8 @@ SIZE = (800, 450)
 FPS = 24
 DURATION = 12
 DEST = Path(__file__).resolve().parent.parent / "public" / "caption"
-FONT = ImageFont.load_default(size=14)
-SMALL = ImageFont.load_default(size=11)
+FONT = ImageFont.load_default(size=28)
+SMALL = ImageFont.load_default(size=22)
 
 
 def mix(a, b, progress):
@@ -28,61 +27,88 @@ def rounded(draw, bounds, radius, fill, outline=None):
     draw.rounded_rectangle(bounds, radius=radius, fill=fill, outline=outline)
 
 
+
+class SoftDraw:
+    """Draw in authored coordinates at 2x, then downsample once."""
+    def __init__(self, image):
+        self.draw = ImageDraw.Draw(image)
+    def __getattr__(self, name):
+        method = getattr(self.draw, name)
+        def call(xy, *args, **kwargs):
+            def scale(value):
+                return tuple(scale(v) for v in value) if isinstance(value, (tuple, list)) else value * 2
+            if name == "rounded_rectangle" and args:
+                args = (args[0] * 2,) + args[1:]
+            for key in ("width", "radius"):
+                if key in kwargs:
+                    kwargs[key] *= 2
+            return method(scale(xy), *args, **kwargs)
+        return call
+
+
 def backdrop():
-    image = Image.new("RGB", SIZE)
-    draw = ImageDraw.Draw(image)
-    for y in range(SIZE[1]):
-        color = tuple(int(mix(a, b, y / SIZE[1])) for a, b in zip((16, 38, 53), (8, 23, 37)))
-        draw.line((0, y, SIZE[0], y), fill=color)
-    draw.polygon([(0, 326), (800, 308), (800, 450), (0, 450)], fill="#152839")
-    for x in range(-300, 1300, 115):
-        draw.line((400, 307, x, 450), fill="#294152")
-    for y in (333, 357, 387, 423):
-        draw.line((0, y, 800, y - 11), fill="#294152")
-    draw.polygon([(35, 56), (258, 42), (258, 277), (35, 289)], fill="#1e3b47", outline="#3b6770")
-    for x in range(58, 258, 36):
-        draw.line((x, 54, x, 286), fill="#294751")
-    for y in range(76, 280, 26):
-        draw.line((35, y, 258, y-13), fill="#294751")
-    draw.rectangle((645, 76, 752, 314), fill="#111f2d", outline="#456170", width=2)
-    draw.rectangle((656, 87, 742, 309), fill="#152d3a", outline="#34505f")
-    draw.line((739, 89, 739, 310), width=3, fill="#d8a36b")
-    draw.rounded_rectangle((707, 211, 728, 216), 2, fill="#77a1b0")
-    draw.line((33, 30, 767, 30), fill="#55727e")
-    draw.text((33, 12), "SYNTHETIC CAPTION STUDIO", font=SMALL, fill="#c5e1e6")
-    draw.text((767, 12), "CAM 01", anchor="ra", font=SMALL, fill="#c5e1e6")
-    rng = random.Random(832)
-    for _ in range(1700):
-        x, y = rng.randrange(800), rng.randrange(32, 450)
-        color = image.getpixel((x, y))
-        draw.point((x, y), tuple(min(255, channel + rng.randrange(3, 11)) for channel in color))
+    image = Image.new("RGB", (1600, 900), "#e8eff9")
+    draw = SoftDraw(image)
+    draw.rounded_rectangle((25, 48, 270, 308), 30, fill="#d4e6ff")
+    draw.rounded_rectangle((43, 65, 252, 278), 23, fill="#002060")
+    draw.ellipse((142, 83, 214, 155), fill="#f25767")
+    draw.polygon([(43, 247), (104, 189), (164, 233), (202, 201), (252, 241), (252, 278), (43, 278)], fill="#97b8e5")
+    draw.line((146, 65, 146, 278), fill="#d4e6ff", width=5)
+    draw.line((43, 174, 252, 174), fill="#d4e6ff", width=5)
+    draw.rounded_rectangle((0, 317, 800, 474), 36, fill="#cbd9ea")
+    draw.rounded_rectangle((639, 65, 759, 323), 30, fill="#b2c7df")
+    draw.rounded_rectangle((652, 80, 745, 319), 22, fill="#dbe6f4")
+    draw.rounded_rectangle((714, 212, 733, 219), 3, fill="#002060")
+    draw.rounded_rectangle((291, 79, 422, 117), 19, fill="#f5f5f2")
+    draw.text((356, 98), "A little field study", anchor="mm", font=SMALL, fill="#002060")
+    draw.text((28, 24), "SYNTHETIC CAPTION STUDIO", font=SMALL, fill="#002060")
+    draw.text((772, 24), "CAM 01", anchor="ra", font=SMALL, fill="#002060")
     return image
 
 
 def actor(draw, x, dominant_hand, color, shadow, label, gait):
+    # Soft editorial silhouettes; the two characters keep the original QA IDs.
+    skin = "#d99b7a" if "MIRA" in label else "#efbb91"
+    hair = "#30304b" if "MIRA" in label else "#5b3d38"
     ground = 365
-    stride = sin(gait) * 16
-    draw.ellipse((x-34, ground-8, x+35, ground+7), fill="#0e202c")
-    for hip, foot in ((-11, -18 + stride), (11, 18 - stride)):
-        draw.line((x+hip, 276, x+hip*1.25, 318, x+foot, ground), width=17, fill="#233d50", joint="curve")
-        rounded(draw, (x+foot-10, ground-6, x+foot+14, ground+4), 5, "#101e2e")
-    rounded(draw, (x-27, 194, x+27, 280), 13, shadow)
-    draw.polygon([(x-20, 201), (x+17, 199), (x+25, 235), (x+17, 274), (x-24, 274)], fill=color)
-    draw.line((x, 200, x, 272), fill="#132b37", width=2)
-    draw.rectangle((x+7, 216, x+17, 220), fill="#e1ecdf")
-    rounded(draw, (x-20, 144, x+20, 187), 15, "#e2b28e")
-    draw.pieslice((x-22, 140, x+22, 174), 180, 360, fill="#162634")
-    draw.line((x-14, 167, x-6, 167), fill="#263640", width=2)
-    draw.line((x+6, 167, x+14, 167), fill="#263640", width=2)
-    draw.line((x-5, 179, x+7, 179), fill="#935b51", width=2)
+    stride = sin(gait) * 13
+    draw.ellipse((x-36, ground-6, x+37, ground+9), fill="#afc1d8")
+    for hip, foot in ((-12, -18 + stride), (12, 18 - stride)):
+        draw.line((x+hip, 273, x+hip*1.1, 319, x+foot, ground-4), width=19, fill="#344769", joint="curve")
+        draw.rounded_rectangle((x+foot-11, ground-10, x+foot+18, ground+3), 6, fill="#f5f5f2")
+        draw.line((x+foot-9, ground+3, x+foot+18, ground+3), fill="#344769", width=3)
+    if "MIRA" in label:
+        draw.ellipse((x-28, 132, x+28, 213), fill=hair)
+    draw.rounded_rectangle((x-8, 183, x+8, 209), 7, fill=skin)
+    draw.rounded_rectangle((x-29, 200, x+29, 282), 23, fill=color)
+    draw.rounded_rectangle((x-27, 259, x+27, 281), 9, fill=color)
+    draw.arc((x-11, 193, x+11, 215), 0, 180, fill=shadow, width=3)
+    draw.ellipse((x-21, 140, x+21, 196), fill=skin)
+    draw.ellipse((x-24, 165, x-15, 178), fill=skin)
+    draw.ellipse((x+16, 165, x+25, 178), fill=skin)
+    # A closed, overlapping cap. No triangular fringe edges crossing the face.
+    draw.pieslice((x-24, 132, x+24, 174), 180, 360, fill=hair)
+
+    if "MIRA" in label:
+        draw.polygon([(x-25, 149), (x-18, 149), (x-18, 185), (x-25, 189)], fill=hair)
+    draw.ellipse((x-10, 165, x-7, 169), fill="#30304b")
+    draw.ellipse((x+8, 165, x+11, 169), fill="#30304b")
+    draw.arc((x-5, 175, x+7, 183), 5, 175, fill="#985d53", width=2)
     reach_x, reach_y = dominant_hand
     side = 1 if reach_x >= x else -1
-    draw.line((x-side*20, 207, x-side*35, 234, x-side*31, 263), width=14, fill=shadow, joint="curve")
-    draw.line((x+side*20, 207, mix(x+side*23, reach_x, .55), mix(219, reach_y, .56), reach_x, reach_y),
-              width=14, fill=color, joint="curve")
-    draw.ellipse((reach_x-5, reach_y-6, reach_x+5, reach_y+6), fill="#e2b28e")
-    draw.rounded_rectangle((x-40, 111, x+40, 133), 2, fill="#101d2b", outline="#456279")
-    draw.text((x, 122), label, anchor="mm", font=SMALL, fill="#e8f0f2")
+    # Round sleeve and elbow joints avoid the former disconnected puppet arms.
+    paths = [
+        ([(x-side*22, 216), (x-side*36, 239), (x-side*32, 264)], shadow),
+        ([(x+side*22, 216), (mix(x+side*27, reach_x, .5), mix(235, reach_y, .5)), (reach_x, reach_y)], color)
+    ]
+    for pts, sleeve in paths:
+        draw.line(pts, fill=sleeve, width=15, joint="curve")
+        for px, py in pts:
+            draw.ellipse((px-7.5, py-7.5, px+7.5, py+7.5), fill=sleeve)
+    draw.ellipse((x-side*32-6, 260, x-side*32+6, 272), fill=skin)
+    draw.ellipse((reach_x-6, reach_y-6, reach_x+6, reach_y+6), fill=skin)
+    draw.rounded_rectangle((x-40, 108, x+40, 131), 11, fill="#f5f5f2")
+    draw.text((x, 120), label, anchor="mm", font=SMALL, fill="#002060")
 
 
 def cube(draw, x, y):
@@ -102,7 +128,7 @@ def folder(draw, x, y, opening):
 
 def frame(background, time):
     image = background.copy()
-    draw = ImageDraw.Draw(image)
+    draw = SoftDraw(image)
     mira = mix(111, 308, ease(time/1.8))
     leon = mix(495, 695, ease((time-10)/1.8))
     placing = ease((time-2)/1.25)
@@ -112,12 +138,12 @@ def frame(background, time):
                  mix(mix(267, 237, placing*(1-release)), 224, pointing))
     lifting = ease((time-4)/1.4)
     leon_hand = (mix(leon-29, leon-49, lifting), mix(267, 216, lifting))
-    actor(draw, mira, mira_hand, "#d57f8c", "#a85a6b", "P01 · MIRA", time*15 if time < 1.8 else 0)
-    actor(draw, leon, leon_hand, "#6da8c3", "#426f8d", "P02 · LEON", (time-10)*15 if 10 < time < 11.8 else 0)
-    draw.polygon([(353, 252), (485, 252), (513, 271), (325, 271)], fill="#566c71", outline="#789093")
-    draw.rectangle((326, 272, 513, 281), fill="#304951")
-    draw.line((345, 280, 339, 342), fill="#344f56", width=7)
-    draw.line((494, 280, 500, 342), fill="#344f56", width=7)
+    actor(draw, mira, mira_hand, "#f25767", "#cd485a", "P01 · MIRA", time*15 if time < 1.8 else 0)
+    actor(draw, leon, leon_hand, "#6d9ad2", "#4d78b3", "P02 · LEON", (time-10)*15 if 10 < time < 11.8 else 0)
+    draw.polygon([(353, 252), (485, 252), (513, 271), (325, 271)], fill="#f5f5f2")
+    draw.rectangle((326, 272, 513, 281), fill="#b1c3dc")
+    draw.line((345, 280, 339, 342), fill="#829bbb", width=7)
+    draw.line((494, 280, 500, 342), fill="#829bbb", width=7)
     if time < 3.3:
         cube(draw, mira_hand[0], mira_hand[1]+8)
     else:
@@ -126,10 +152,10 @@ def frame(background, time):
         folder(draw, 469, 248, 0)
     else:
         folder(draw, mix(469, leon_hand[0], lifting), mix(248, leon_hand[1]+4, lifting), ease((time-6)/1.2))
-    draw.line((33, 420, 767, 420), fill="#4b6675")
-    draw.text((33, 433), "SYN-CAP-01  /  PROCEDURAL VIDEO", font=SMALL, fill="#b7d1db")
-    draw.text((767, 433), f"00:{time:05.2f}", anchor="ra", font=FONT, fill="#e2effa")
-    return image
+    draw.line((33, 420, 767, 420), fill="#a4b8d1")
+    draw.text((33, 433), "SYN-CAP-01  /  PROCEDURAL VIDEO", font=SMALL, fill="#002060")
+    draw.text((767, 433), f"00:{time:05.2f}", anchor="ra", font=FONT, fill="#002060")
+    return image.resize(SIZE, Image.Resampling.LANCZOS)
 
 
 def main():
@@ -152,4 +178,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

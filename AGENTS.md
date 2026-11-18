@@ -4,7 +4,7 @@ This project is an interactive archive of JOO’s work across AI, data quality a
 
 ## Visual conventions
 
-Use the navy field (#071426), core blue (#002060), paper (#F5F5F2), ice blue (#D4E6FF) and coral (#F25767). Keep type legible in HTML. Bricolage Grotesque carries headlines and prose. IBM Plex Mono marks controls and instrument labels. Preserve the asymmetric desktop hero and readable mobile flow.
+Use the navy field (#071426), core blue (#002060), paper (#F5F5F2), ice blue (#D4E6FF) and coral (#F25767). Keep type legible in HTML. EB Garamond carries headlines and prose. IBM Plex Mono marks controls and instrument labels. Preserve the asymmetric desktop hero and readable mobile flow.
 
 ## Architecture
 
@@ -36,7 +36,19 @@ For Phase 5, verify the desktop and mobile hero budgets, skip and focus behavior
 
 For interface motion, check chapter parallax, near-boundary wheel alignment, deep-link focus, populated incoming view snapshots, touch scrolling and reduced motion.
 
+The palette-dot transition and typography overrides are in src/art-direction.css and ChapterColors.tsx. Keep palette colors exact, preserve a straight resting baseline for FieldLine, and verify chapter contrast at rest and during scroll. Reduced motion uses solid color changes.
+
 ## Next development task
 
 Run the physical-device and hosting checks in DEPLOYMENT.md before an authorized release. Review the Huahua artwork terms before serving a build that includes the atlas.
 
+
+Chapter wipes must keep content visible. The local text masks and shader circle share viewport coordinates; preserve deterministic reverse scrolling and avoid time-based delayed chapter reveals. Keep fixed dark demo panels outside the ink masks. New reading surfaces on the open chapter background should be included in the ChapterColors ink target selector. Rounded illustration and caption styles live in src/chapter-refinements.css. Preserve growth node coordinates and authored caption action timing when redrawing assets.
+
+Local project navigation now runs through src/navigation.tsx. Keep the homepage mounted but hidden and inert while a project is active; preserve its history-entry scroll position and focus on return. ChapterColors must ignore project scrolls and remeasure synchronously on archive:restore before taking a View Transition snapshot. Never await requestAnimationFrame inside the transition update callback: the browser suspends rendering there. Verify return links, Back/Forward, deep growth-node state, explicit chapter anchors, reduced motion and the circle-cover fallback. Detail and disclosure styles live in src/detail-refinements.css; project diagrams are original inline SVG in ProjectIllustration.tsx.
+
+Home UI persistence is centralized in src/homeState.ts using versioned sessionStorage with schema validation and an in-memory fallback. RememberedDetails controls the two research and two Caption details elements; GrowthTimeline persists only its selected node. Keep this record limited to navigation/UI state. A cold detail reload mounts the saved home hidden, restores previously loaded lazy chapters, and waits for their readiness and fonts before capturing the return transition. Restore an anchor plus its offset after layout, and preserve explicit chapter links. Check repeated detail reloads, both return paths, closed-state persistence, delayed imports, corrupt/disabled storage and tab scoping.
+
+Caption faces use single filled ellipses; do not reintroduce composite rounded face fills or vertical face lines. Run python scripts/check-caption-faces.py against the decoded MP4 after fixture changes. Change the media/poster revision query in CaptionInspection.tsx whenever regenerating them so old browser caches cannot mask the fix.
+
+The hero has three forms: Living field, JOO letterform and Signal ring. SignalControls.form is 0/1/2; use uShape weights rather than a scalar morph so arbitrary interrupted transitions stay continuous. Keep one Points draw and the current mobile budgets. The cycle surface is named Next particle shape; direct buttons form the Particle shape group with aria-pressed selection. Reduced motion, paused rendering and disabled WebGL must support all three choices. Use filled dot subpaths for the static SVG ring and verify actual raster output on mobile. Do not move the ice-blue chapter dot back into the cloud; its work-transition origin is 97% / 18%.

@@ -1,3 +1,4 @@
+import { readHomeState, rememberGrowth } from '../homeState'
 import { useState } from 'react'
 import { projects } from '../content/projects'
 import './growth.css'
@@ -40,7 +41,7 @@ function coordinates(node: (typeof nodes)[number]) {
 }
 
 export default function GrowthTimeline() {
-  const [active, setActive] = useState(nodes[0])
+  const [active, setActive] = useState(() => nodes.find(node => node.id === readHomeState()?.growthNode) || nodes[0])
   return (
     <>
       <header className="growth-heading">
@@ -60,7 +61,7 @@ export default function GrowthTimeline() {
               aria-label={node.label}
               aria-pressed={active.id === node.id}
               aria-controls="growth-note"
-              onClick={() => setActive(node)}
+              onClick={() => { setActive(node); rememberGrowth(node.id) }}
             >
               <span className="growth-dot" aria-hidden="true" />
               {node.markerLabel && <span className="growth-map-label mono" aria-hidden="true">{node.markerLabel}</span>}

@@ -1,0 +1,43 @@
+/* Text and background share the same geometric wipe, including reverse scroll. */
+.archive-home .chapter-ink {
+  background-image: var(--ink-wipe);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.archive-home :is(.hero-statement, .section-head, .essay-copy, .connection-inner) {
+  translate: 0 var(--scene-drift, 0px);
+}
+.archive-home .signal-poster { filter: brightness(calc(1 - var(--signal-wipe, 0) * .65)); }
+.archive-home .essay-illustration { border: 0; border-radius: 26px; box-shadow: 0 16px 40px #07142614; }
+.archive-home :is(.cap-workbench, .cap-checks, .growth-board) { border-radius: 24px; overflow: clip; }
+.archive-home .growth-map { border-radius: 24px; }
+.archive-home .cap-player video { border-radius: 18px; width: calc(100% - 24px); margin: 0 12px 12px; }
+.archive-home :is(.cap-button, .cap-track, .cap-segment) { border-radius: 10px; }
+.archive-home .cap-track { overflow: clip; }
+.archive-home .cap-inspector { background: #10243c; }
+.archive-home .cap-checks { padding: clamp(16px, 2vw, 28px); background: #071426; margin-top: 18px; }
+.archive-home .cap-checks summary { color: #edf4ff; }
+@media (max-width: 740px) {
+  .archive-home .essay-illustration { border-radius: 20px; }
+  .archive-home :is(.cap-workbench, .cap-checks, .growth-board) { border-radius: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .archive-home :is(.hero-statement, .section-head, .essay-copy, .connection-inner) { translate: none; }
+}
+@media (forced-colors: active) {
+  .archive-home .chapter-ink { background: none; -webkit-text-fill-color: CanvasText; }
+}
+
+/* Keep glyphs in the text paint layer: transformed child glyphs cannot share
+   their parent's background-clip mask consistently across browsers. */
+.archive-home .chapter-ink :is(.hop-word, .hop-char) { display: inline; animation: none !important; transform: none; opacity: 1; }
+.archive-home .chapter-section .chapter { animation: none; }
+.archive-home .essay { padding-block: clamp(38px, 5vw, 72px) clamp(32px, 4vw, 58px); }
+.archive-home .essay-head { margin-bottom: clamp(18px, 2vw, 28px); }
+.archive-home .essay-head .chapter-rule { height: 38px; margin-block: 0; }
+.archive-home .work { padding-block: clamp(36px, 4vw, 64px) clamp(28px, 3vw, 44px); }
+.archive-home :is(#disclosure-experiment, #caption-inspection, #growth-timeline) { scroll-margin-top: 84px; }
+@media (max-width: 740px) {
+  .archive-home :is(#disclosure-experiment, #caption-inspection, #growth-timeline) { scroll-margin-top: 72px; }
+}

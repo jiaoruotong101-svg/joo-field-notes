@@ -15,7 +15,7 @@
     "check:caption": "node --experimental-strip-types scripts/check-caption-inspection.mjs"
   },
   "dependencies": {
-    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource-variable/eb-garamond": "^5.3.0",
     "@fontsource/ibm-plex-mono": "^5.2.7",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

@@ -1,13 +1,15 @@
+import type { SignalForm } from './forms'
 import { useEffect, type RefObject } from 'react'
 import {
   MathUtils, PerspectiveCamera, Points, Scene, ShaderMaterial, Vector3, WebGLRenderer,
 } from 'three'
 import { createSignalGeometry, PARTICLE_COUNT } from './geometry'
 import { fragmentShader, vertexShader } from './shaders'
+import { chapterMotion } from './chapterMotion'
 
 export type SignalControls = {
   paused: boolean
-  glyph: boolean
+  form: SignalForm
   impulse: number
   hoverX: number
   hoverY: number
@@ -44,7 +46,9 @@ export default function SignalCanvas({ context, controls, onAvailability }: Sign
     const geometry = createSignalGeometry(baseCount)
     const uniforms = {
       uTime: { value: 0 },
-      uMorph: { value: 0 },
+      uWipe: { value: new Vector3() },
+      uHeight: { value: 1 },
+      uShape: { value: new Vector3(1, 0, 0) },
       uBurst: { value: 0 },
       uArrival: { value: 0 },
       uDpr: { value: 1 },
@@ -88,6 +92,7 @@ export default function SignalCanvas({ context, controls, onAvailability }: Sign
         renderer.setDrawingBufferSize(width, height, dpr)
       }
       uniforms.uDpr.value = dpr
+      uniforms.uHeight.value = height
       uniforms.uDensity.value = compact.matches ? 0.94 : 1.02
       geometry.setDrawRange(0, Math.floor(Math.min(baseCount, compact.matches ? 20000 : baseCount) * quality))
     }
@@ -102,7 +107,7 @@ export default function SignalCanvas({ context, controls, onAvailability }: Sign
       const scrollY = window.scrollY
       const interacting = input.dragging || input.dragX !== seenDragX || input.dragY !== seenDragY
         || input.impulse !== inputImpulse || sinceBurst < 1.1
-        || Math.abs(uniforms.uMorph.value - Number(input.glyph)) > 0.01
+        || Math.abs(uniforms.uShape.value.getComponent(input.form) - 1) > 0.01
         || Math.abs(velocityX) + Math.abs(velocityY) > 0.12 || scrollY !== lastScrollY
       if (painted && !idle && compact.matches && !interacting && rawDt < 0.03) {
         frame = requestAnimationFrame(draw)
@@ -131,10 +136,15 @@ export default function SignalCanvas({ context, controls, onAvailability }: Sign
       sinceBurst += dt
       uniforms.uArrival.value = idle ? 1 : MathUtils.smootherstep(elapsed, 0, 1.65)
       uniforms.uTime.value = reduced ? 0 : elapsed
-      uniforms.uMorph.value = idle ? Number(input.glyph) : MathUtils.damp(uniforms.uMorph.value, input.glyph ? 1 : 0, 3.8, dt)
+      for (let i = 0; i < 3; i++) {
+        const target = i === input.form ? 1 : 0
+        uniforms.uShape.value.setComponent(i, idle ? target : MathUtils.damp(uniforms.uShape.value.getComponent(i), target, 4.8, dt))
+      }
       uniforms.uBurst.value = idle ? 0 : Math.min(1, sinceBurst * 7) * Math.exp(-sinceBurst * 2.5)
       if (reduced) scroll = 0
       else if (!idle) scroll = MathUtils.clamp(scrollY / Math.max(500, innerHeight), 0, 1)
+      const box = canvas.getBoundingClientRect()
+      uniforms.uWipe.value.set(chapterMotion.circleX - box.left, chapterMotion.circleY - box.top, reduced ? 0 : chapterMotion.radius)
       camera.position.z = 5.8 - scroll * 0.75
       camera.position.y = scroll * 0.55
       const viewHalfHeight = Math.tan(MathUtils.degToRad(camera.fov / 2)) * camera.position.z

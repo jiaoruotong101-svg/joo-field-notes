@@ -20,10 +20,10 @@ npm run preview -- --host 127.0.0.1
 
 ## Design and implementation
 
-The opening takes the form of an observation field. Large Bricolage Grotesque typography and a quiet measurement grid frame a particle body. A navy field (#071426), a deeper core blue (#002060), ice blue (#D4E6FF), paper white (#F5F5F2), and coral (#F25767) carry through the archive. Coral marks interaction and the more concentrated particle bands. IBM Plex Mono is reserved for controls and instrumentation.
+The opening takes the form of an observation field. Large EB Garamond typography and a quiet measurement grid frame a particle body. A navy field (#071426), a deeper core blue (#002060), ice blue (#D4E6FF), paper white (#F5F5F2), and coral (#F25767) carry through the archive. Coral marks interaction and the more concentrated particle bands. IBM Plex Mono is reserved for controls and instrumentation.
 
 - **Phase 1** established the visual system, native anchors, archive sections and project URLs. The public repository descriptions are curated in TypeScript and bundled with the site.
-- **Phase 2** adds a seed-based Three.js point cloud, a vertex and fragment shader, pointer force, drag inertia, click/tap/keyboard morphing and a scroll-driven camera. The shape alternates between the particle body and a sampled JOO letterform. The pause button stops motion. The renderer uses a lower initial budget on mobile and can lower resolution and particle draw count during sustained slow rendering.
+- **Phase 2** adds a seed-based Three.js point cloud, a vertex and fragment shader, pointer force, drag inertia, click/tap/keyboard morphing and a scroll-driven camera. The shape cycles through the living particle field, a sampled JOO letterform and a braided signal ring. Click/tap the surface or use Enter/Space to cycle; Field / JOO / Orbit selects any form directly. Three GPU target weights blend from the current mixture, so rapid selections remain continuous. The pause button stops motion. The renderer uses a lower initial budget on mobile and can lower resolution and particle draw count during sustained slow rendering.
 - **Phase 3** adds the Visual Data QC frame lab. Inspect the 10%, 50% and 90% synthetic editorial stills in a Three.js scene, toggle detection boxes, compare the fixture with the documented rules, and mark each sample Accept, Hold or Reject. Generate a simulated report in the page and export it as JSON.
 - **Phase 4** includes the Resume Copilot sandbox, the URL Crawler star map, the Huahua Playground, the disclosure-timing experiment, the caption inspection timeline and the personal growth timeline. Confirm public asset rights, the personal-role descriptions, contact details, résumé link and measurement definitions before adding them to the archive.
 - **Phase 5** reduces the initial homepage payload, adapts the hero rendering budget on mobile, and verifies keyboard, reduced-motion and WebGL fallback behavior in local production preview. Hosted and physical-device validation remain release checks.
@@ -122,7 +122,7 @@ public/
 
 ## Phase 5 verification
 
-The hero can switch between a still particle image and a JOO letterform with the keyboard, mouse or touch even with WebGL disabled. A cold visit with reduced motion skips the 3D download. An unavailable WebGL2 context selects the same static control. Desktop and small screens receive separate poster sizes. The local homepage defers the research, caption and personal interactions until they get near the viewport.
+The hero can switch among a still particle image, a JOO letterform and an original dotted SVG signal ring with the keyboard, mouse or touch even with WebGL disabled. A cold visit with reduced motion skips the 3D download. An unavailable WebGL2 context selects the same static control. Desktop and small screens receive separate poster sizes. The local homepage defers the research, caption and personal interactions until they get near the viewport.
 
 The mobile tier constructs only the 20,000 points it can draw, caps the drawing-buffer pixel ratio at 1.2 and limits idle drawing to about 30 draws per second. Touch, morph and camera changes can use the browser's regular animation-frame cadence. The scene suspends rendering out of view or while the page is hidden, and reduces quality if the observed render cadence drops. Desktop retains its larger initial budget.
 
@@ -145,8 +145,39 @@ The shared Three.js chunk is about 535 kB minified and 132 kB gzip. Vite flags i
 
 Home chapter headings ease in with scroll-linked animation. The existing illustrations and the closing orbit move on a separate scroll timeline. Near a desktop chapter boundary, the page aligns after wheel scrolling settles, within 56 CSS pixels and in the direction of travel. Touch scroll and keyboard navigation use the browser's own scrolling.
 
-Supported browsers use native View Transitions for same-origin page changes. The entry script is render-blocking so the transition captures the initial React page instead of an empty root. Native dialog controls retain focus behavior and animate their opening and closing. Reduced motion disables these effects. Browsers without the relevant APIs use standard navigation and scrolling.
+Project navigation uses the same circular language as the chapter backgrounds. src/navigation.tsx handles local project links, browser history, focus and scroll restoration. A View Transition reveals the incoming page from the clicked point, with a viewport-sized circle. Browsers without that API use an animated core-blue cover; reduced motion changes pages immediately. Modified clicks, new tabs, downloads and external links keep native behavior.
+
+The home stays mounted, hidden and inert while a detail page is open. Returning through Selected work or browser Back restores its position, expanded content and selected growth node. The hidden particle scene stops drawing through its viewport observer; video playback pauses on navigation. Circle masks are synchronously remeasured before the incoming snapshot. A versioned sessionStorage record now retains the home URL, scroll anchor and offset, four open disclosure panels, loaded chapter IDs, source link and selected growth node across detail-page reloads in the same tab. Before returning, previously loaded chapters and fonts are prepared outside the transition callback, then the restored layout is measured. Closed disclosure values persist as well. Storage errors or invalid records fall back to a usable archive. Session storage contains only this navigation/UI state; it does not store résumé fields or experiment responses. A direct detail-page visitor returns to the work chapter. Explicit Research and Contact links still navigate to their own chapters.
+
+Each project has an original rounded SVG diagram, and demo containers, controls and dialogs share the archive's rounded geometry. The disclosure experiment uses ice-blue surfaces, navy text and coral selection accents. Its scenario, conditions, explanation timing and feedback logic are unchanged. The procedural video now uses solid oval face primitives and no vertical nose stroke. The old composite face fill left a visible center seam even after the hair cap was changed. The MP4 and poster URLs carry a revision query so existing tabs request the corrected assets. Run python scripts/check-caption-faces.py to decode every frame and check the flat band between the eyes for a center seam.
+
+Desktop (1440px) and simulated touch (390px) acceptance covered circular transitions, return-link and browser Back/Forward position, a deep growth-node return with preserved selection, explicit chapter links, direct detail entry, reduced motion and the no-View-Transition fallback. All five detail pages and the disclosure chapter had no axe violations in the sampled initial states. Disclosure timing, Caption playback/findings, Resume matching, Crawler export and Huahua interactions also passed browser regression checks. Repeated detail reloads followed by both Selected work and browser Back restored all four disclosure states, the selected growth node and exact scroll position at 1440px and simulated 390px touch. Corrupt and blocked session storage were also checked. Physical-device Safari validation remains open.
+
+## Garamond and chapter color transitions
+
+The display and reading face is locally bundled EB Garamond. IBM Plex Mono remains on instrument readouts and compact data labels.
+
+The shared FieldLine components rest on a straight baseline. Mouse proximity pulls a local segment away from that baseline. A damped spring returns the line, including a short overshoot. Reduced motion keeps the baseline straight.
+
+The home background uses a fixed layer of palette dots. Scrolling toward the next chapter expands its dot until that color fills the viewport. The work chapter uses #D4E6FF, research #002060, practice #F25767, personal growth #071426, and contact #D4E6FF. Chapter content stays visible throughout the transition. Headings and prose use a local circular text mask that switches ink exactly where the new background passes. A small scroll-linked drift connects the content to the expanding dot; chapter spacing is tightened. The opening particle shader samples the same circle in screen coordinates, changing the covered particles to core blue and coral while retaining the existing scroll camera movement. Scrolling upward reverses the expansion. Reduced motion changes the solid background without expanding dots.
+
+Implementation lives in src/components/ChapterColors.tsx, src/art-direction.css and src/chapter-refinements.css, with the elastic lines in src/components/FieldLine.tsx. src/scene/chapterMotion.ts passes the circle coordinates to the GPU renderer without React state updates. Forced colors restore ordinary system text; reduced motion keeps solid background changes and removes drift.
+
+The three original chapter SVGs now use rounded frames and the archive palette. The synthetic Caption clip uses original soft illustrated characters, a blue window and rounded studio scenery, rendered at 2x before downsampling. Its 12-second duration, character IDs, object actions and seeded findings are preserved. No external footage or company data is used.
+
+Production preview was checked in Chrome at 1440px and simulated touch at 390px: all five chapter wipes forward and backward, continuously visible content, horizontal overflow, caption seeking/playback and findings, and growth node alignment. Reduced-motion chapter scans reported no axe violations in the sampled regions. These checks are browser emulation, not physical-phone validation.
 
 ## Hosting
 
 See [Deployment notes](DEPLOYMENT.md) for static routing, future Vercel settings and the pre-release acceptance steps.
+
+
+
+
+## Three signal forms
+
+The original living field, the JOO glyph and a braided orbital ring share one Points draw and one geometry. src/scene/forms.ts defines the torus strands; geometry.ts adds aOrbit, and the shader combines body, glyph and orbit with three continuously damped weights. The existing force field, burst, drag inertia, scroll camera and chapter color wipe remain active. Particle counts and resolution caps are unchanged. Reduced motion and pause snap to the selected form. The static orbit uses three filled SVG paths; it does not download Three.js. Use filled dot contours so the tiny fallback dots still rasterize on narrow screens.
+
+The ice-blue chapter dot now rests near the upper-right viewport edge (97% / 18%), away from the opening cloud. The other ice-blue seed sits at the left margin. Both retain their chapter transition role. The hero uses overflow: clip to keep keyboard focus from horizontally scrolling the oversized canvas inside its composition.
+
+Production-preview checks at 1440px and simulated 390px touch covered all three live forms, direct and cyclic input, rapid selection, drag without an accidental form change, pause/resume, visible static alternatives with reduced motion or disabled WebGL, console errors, overflow and hero axe rules. The mobile static SVG was also rasterized to confirm that its dots paint. These are browser-emulation checks, not physical-device performance measurements.

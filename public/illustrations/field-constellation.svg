@@ -5,9 +5,19 @@
     <pattern id="dots" width="19" height="19" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#a8c7e5" fill-opacity=".31"/></pattern>
     <g id="star" stroke="#ffd1d2" stroke-width="1.2" stroke-linecap="round"><path d="M-7 0H7M0-7V7m-4-4 8 8m0-8-8 8"/><circle r="12" stroke="#ff97a7" stroke-opacity=".45"/></g>
   </defs>
-  <rect x=".5" y=".5" width="479" height="295" fill="url(#bg)" stroke="#435a73"/>
-  <rect x="18" y="18" width="444" height="260" fill="url(#dots)"/>
-  <g stroke="#8eafcf" stroke-opacity=".24">
+  <style>
+    @keyframes coreBreath { 0%,100% { transform: scale(1); opacity: .95 } 50% { transform: scale(1.9); opacity: .35 } }
+    @keyframes twinkle { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+    @keyframes starSpin { to { transform: rotate(360deg) } }
+    @media (prefers-reduced-motion: no-preference) {
+      .core { transform-box: fill-box; transform-origin: center; animation: coreBreath 3.6s ease-in-out infinite; }
+      .star-node { transform-box: fill-box; transform-origin: center; animation: twinkle 3s ease-in-out infinite; }
+      .star-spin { transform-box: fill-box; transform-origin: center; animation: starSpin 22s linear infinite; }
+    }
+  </style>
+  <rect x=".5" y=".5" width="479" height="295" rx="28" fill="#102846" stroke="#435a73" stroke-opacity=".35"/>
+  <rect x="18" y="18" width="444" height="260" fill="none"/>
+  <g stroke="#8eafcf" stroke-opacity=".38">
     <ellipse cx="241" cy="144" rx="178" ry="58" transform="rotate(-23 241 144)"/>
     <ellipse cx="241" cy="144" rx="165" ry="58" transform="rotate(23 241 144)"/>
     <ellipse cx="241" cy="144" rx="147" ry="91" stroke-dasharray="3 6"/>
@@ -15,10 +25,10 @@
   </g>
   <path d="M91 194c48-51 78-55 151-50 58 6 92-32 142-50" stroke="url(#trail)" stroke-width="1.7"/>
   <path d="M158 128l84 16 24-59 66 43-31 73-59-57-43 52" stroke="#95b7d3" stroke-opacity=".37"/>
-  <g fill="#a9c8e6"><circle cx="158" cy="128" r="3"/><circle cx="266" cy="85" r="3"/><circle cx="332" cy="128" r="3"/><circle cx="301" cy="201" r="3"/><circle cx="199" cy="196" r="3"/><circle cx="91" cy="194" r="4"/></g>
-  <circle cx="242" cy="144" r="7" fill="#cae2f7" fill-opacity=".14" stroke="#c1e1fa"/>
-  <circle cx="242" cy="144" r="2.6" fill="#e1efff"/>
-  <use href="#star" x="384" y="94"/>
+  <g fill="#a9c8e6"><circle cx="158" cy="128" r="3" class="star-node" style="animation-delay:0s"/><circle cx="266" cy="85" r="3" class="star-node" style="animation-delay:.5s"/><circle cx="332" cy="128" r="3" class="star-node" style="animation-delay:1s"/><circle cx="301" cy="201" r="3" class="star-node" style="animation-delay:1.5s"/><circle cx="199" cy="196" r="3" class="star-node" style="animation-delay:2s"/><circle cx="91" cy="194" r="4" class="star-node" style="animation-delay:2.4s"/></g>
+  <circle cx="242" cy="144" r="20" fill="#D4E6FF" fill-opacity=".07"/><circle cx="242" cy="144" r="7" fill="#cae2f7" fill-opacity=".14" stroke="#c1e1fa"/>
+  <circle cx="242" cy="144" r="2.6" fill="#e1efff" class="core"/>
+  <use href="#star" x="384" y="94" class="star-spin"/>
   <path d="M91 194v34m151-84v-27m142-23V66" stroke="#c1d8ef" stroke-opacity=".58"/>
   <g font-family="monospace" font-size="14" fill="#cbdff1">
     <text x="91" y="250" text-anchor="middle">Management</text><text x="91" y="267" text-anchor="middle">science</text>

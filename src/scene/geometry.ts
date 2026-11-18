@@ -1,3 +1,4 @@
+import { orbitalPoint } from './forms'
 import { BufferAttribute, BufferGeometry } from 'three'
 
 export const PARTICLE_COUNT = 48000
@@ -34,6 +35,7 @@ export function createSignalGeometry(count: number) {
   const positions = new Float32Array(count * 3)
   const letters = new Float32Array(count * 3)
   const traits = new Float32Array(count * 3)
+  const orbits = new Float32Array(count * 3)
   for (let i = 0; i < count; i++) {
     const offset = i * 3
     const kind = random()
@@ -66,12 +68,14 @@ export function createSignalGeometry(count: number) {
     letters[offset] = (pixel[0] - 240 + random()) * 0.009
     letters[offset + 1] = (90 - pixel[1] + random()) * 0.009
     letters[offset + 2] = (random() - 0.5) * 0.16
+    orbits.set(orbitalPoint(angle, (i * 2.399963229728653) % (Math.PI * 2), i % 3 - 1), offset)
     traits[offset] = kind
     traits[offset + 1] = random()
     traits[offset + 2] = random()
   }
   return new BufferGeometry()
     .setAttribute('position', new BufferAttribute(positions, 3))
+    .setAttribute('aOrbit', new BufferAttribute(orbits, 3))
     .setAttribute('aGlyph', new BufferAttribute(letters, 3))
     .setAttribute('aTraits', new BufferAttribute(traits, 3))
 }

@@ -1,0 +1,15 @@
+.signal-forms { position: absolute; z-index: 2; bottom: 6%; left: 50%; transform: translateX(-50%); display: flex; gap: 4px; padding: 3px; border: 1px solid #d4e6ff30; border-radius: 24px; background: #071426d9; white-space: nowrap; }
+.signal-forms button { min-height: 44px; min-width: 60px; border: 0; padding: 6px 13px; border-radius: 21px; background: none; color: #bed0e8; cursor: pointer; font: 10px var(--mono); }
+.signal-forms button[aria-pressed='true'] { background: #d4e6ff; color: #071426; }
+.signal-forms button:focus-visible { outline: 2px solid #ffb1bd; outline-offset: 3px; }
+.signal-static-orbit { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.instrument:not([data-state='live'])[data-form='2'] .signal-poster { opacity: 0; }
+.signal-status { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media(max-width:740px) { .signal-forms { bottom: 6%; } .signal-forms button { padding-inline: 10px; } }
+/* clip preserves the composition without scrollLeft shifts when the larger
+   canvas button receives keyboard focus or scrollIntoView. */
+.archive-home .hero { overflow: clip; }
+.archive-home .hero h1 { margin-left: 0; }
+@media(max-width:740px) {
+  .instrument .readout-side { top: 8%; bottom: auto; right: 2%; font-size: 8px; }
+}

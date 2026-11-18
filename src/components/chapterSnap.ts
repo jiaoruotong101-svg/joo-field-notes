@@ -16,6 +16,7 @@ export function attachChapterSnap() {
   }
 
   function settle() {
+    if (!document.documentElement.classList.contains('archive-home')) return
     const toward = direction
     direction = 0
     if (!toward || !preference.matches || performance.now() - latestWheel > 900) return

@@ -1,0 +1,68 @@
+/* A single paper-and-ink palette for the timing experiment. */
+.archive-home .disclosure {
+  --dis-line: #00206026;
+  --dis-muted: #344d70;
+  --dis-ink: #071426;
+  --dis-panel: #D4E6FF;
+}
+.disclosure :is(.dis-console, .dis-feedback) { border-radius: 26px; overflow: clip; }
+.disclosure .dis-console { box-shadow: 0 18px 48px #07142618; }
+.disclosure :is(.dis-conditions label span, .dis-question label span) {
+  border-radius: 14px; background: #D4E6FF; color: #002060; border-color: #00206030;
+  font-size: 16px; padding-inline: 18px;
+}
+.disclosure .dis-conditions { gap: 8px; margin-bottom: 20px; }
+.disclosure .dis-conditions input:checked + span { background: #F25767; border-color: #F25767; color: #071426; }
+.disclosure .dis-question input:checked + span { background: #002060; border-color: #002060; color: #f5f5f2; }
+.disclosure .dis-track { gap: 6px; border: 0; padding: 12px; }
+.disclosure .dis-track li { border: 0; border-radius: 15px; min-height: 54px; background: #e8f0fc; }
+.disclosure .dis-track li[aria-current='step'] { background: #002060; color: #f5f5f2; box-shadow: none; }
+.disclosure .dis-track li[aria-current='step'] .dis-step { color: #ffb1bd; }
+.disclosure .dis-track li[data-passed='true'] .dis-step { color: #002060; }
+.disclosure .dis-track li[aria-current='step'][data-passed='true'] .dis-step { color: #ffb1bd; }
+.disclosure .dis-explanation { background: #e8f0fc; border-color: #00206026; }
+.disclosure .dis-event { border: 0; border-radius: 18px; background: #f5f5f2; min-height: 112px; }
+.disclosure .dis-explanation .dis-reveal { color: #002060; }
+.disclosure .dis-feedback { background: #D4E6FF; }
+.disclosure .dis-feedback-heading .dis-scale { color: #344d70; }
+.disclosure .dis-button { border-radius: 14px; background: #e8f0fc; color: #071426; border-color: #00206030; }
+.disclosure .dis-primary:not(:disabled) { background: #002060; border-color: #002060; color: #f5f5f2; }
+.disclosure .dis-primary:not(:disabled):hover { background: #173d7a; }
+.disclosure .dis-run-actions { border-color: #00206026; padding-block: 15px; }
+.disclosure .dis-question label span { min-width: 44px; padding-inline: 8px; }
+.disclosure :is(input:focus-visible + span, button:focus-visible) { outline: 3px solid #F25767; outline-offset: 3px; }
+@media(max-width:590px) {
+  .disclosure :is(.dis-console, .dis-feedback) { border-radius: 20px; }
+  .disclosure .dis-track { gap: 4px; padding: 8px; }
+  .disclosure .dis-track li { padding: 10px 8px; border-radius: 12px; }
+  .disclosure .dis-conditions label span { padding-inline: 12px; }
+}
+/* Detail pages keep the opening's rounded geometry and original palette. */
+.project-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(230px, .43fr); gap: 40px; align-items: center; }
+.project-illustration { width: 100%; max-width: 360px; border-radius: 28px; justify-self: end; }
+.project-page :is(.qc-viewer, .qc-inspector, .qc-review, .qc-report, .qc-samples, .rc-resume-sheet, .rc-form, .rc-matches, .rc-workbench, .crawler-map, .crawler-inspector, .crawler-workbench, .crawler-table-wrap, .hua-stage, .hua-controls) { border-radius: 22px; overflow: clip; }
+.project-page :is(button, input:not([type=checkbox],[type=range]), select, textarea) { border-radius: 10px; }
+.project-page :is(.rc-dialog, .crawler-dialog) { border-radius: 24px; }
+.project-page .pipeline { border-radius: 20px; background: #102846; padding: 18px 24px; }
+.project-page .project-story { gap: 28px; }
+.project-page .project-story section { border-top: 1px solid #d4e6ff30; padding-top: 20px; }
+.project-page .project-story h2 { color: #d4e6ff; }
+@media(max-width:740px) {
+  .project-intro { grid-template-columns: 1fr; gap: 24px; }
+  .project-illustration { max-width: 300px; justify-self: start; }
+  .project-page .pipeline { padding: 16px; }
+}
+.route-veil { position: fixed; inset: 0; z-index: 10000; background: #002060; pointer-events: all; }
+@media(prefers-reduced-motion:no-preference) {
+  ::view-transition-group(root) { animation: none; }
+  ::view-transition-old(root) { animation: none; mix-blend-mode: normal; z-index: 1; }
+  ::view-transition-new(root) { animation: route-circle 660ms cubic-bezier(.2,.65,.25,1) both; mix-blend-mode: normal; z-index: 2; }
+}
+@keyframes route-circle {
+  from { clip-path: circle(0px at var(--route-x, 80vw) var(--route-y, 70vh)); }
+  to { clip-path: circle(var(--route-radius, 150vmax) at var(--route-x, 80vw) var(--route-y, 70vh)); }
+}
+.project-page :is(.qc-console, .crawler-console, .hua-console) { border-radius: 24px; overflow: clip; }
+
+.disclosure .dis-console button:focus-visible,
+.disclosure .dis-feedback :is(input:focus-visible + span, button:focus-visible) { outline-color: #002060; }

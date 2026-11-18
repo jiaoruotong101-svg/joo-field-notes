@@ -1,9 +1,10 @@
+import { RememberedDetails } from '../components/RememberedDetails'
 import { useRef, useState } from 'react'
 import { annotations, checkAnnotations, clip, evidence, personLabel, segmentAt, timecode, type Finding } from './timeline'
 import './caption.css'
 
-const mediaPath = '/caption/studio.mp4'
-const posterPath = '/caption/studio-poster.webp'
+const mediaPath = '/caption/studio.mp4?v=face-ellipse-3'
+const posterPath = '/caption/studio-poster.webp?v=face-ellipse-3'
 const ticks = [0, 2, 4, 6, 8, 10, 12]
 
 export default function CaptionInspection() {
@@ -177,16 +178,16 @@ export default function CaptionInspection() {
             ))}
           </ol>
         )}
-        <details className="cap-details">
+        <RememberedDetails id="caption-checks" className="cap-details">
           <summary>How the checks work</summary>
           <p>Continuity checks for uncovered intervals longer than one frame. Caption and person checks compare the annotation’s action and actor at its midpoint with the authored reference. The reference comes from this animation’s script.</p>
-        </details>
-        <details className="cap-details">
+        </RememberedDetails>
+        <RememberedDetails id="caption-transcript" className="cap-details">
           <summary>Visual transcript of the synthetic clip</summary>
           <ol>{evidence.map((segment) => (
             <li key={segment.id}><span className="mono">{timecode(segment.start)}–{timecode(segment.end)}</span><span>{personLabel(segment.person)}. {segment.text}</span></li>
           ))}</ol>
-        </details>
+        </RememberedDetails>
       </section>
     </>
   )

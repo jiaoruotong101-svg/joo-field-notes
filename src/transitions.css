@@ -30,12 +30,6 @@
   }
 
   @supports (animation-timeline: view()) {
-    .archive-home :is(.section-head, .essay-copy h2, .connection h2, .dis-heading h2, .cap-heading h2, .growth-heading h3) {
-      animation: chapter-arrive linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 28%;
-    }
-
     .archive-home :is(.essay-illustration, .connection-orbit) {
       animation: chapter-parallax linear both;
       animation-timeline: view();
@@ -77,11 +71,6 @@
   }
 }
 
-@keyframes chapter-arrive {
-  from { opacity: .74; translate: 0 16px; }
-  to { opacity: 1; translate: 0 0; }
-}
-
 @keyframes chapter-parallax {
   from { translate: 0 var(--chapter-drift); }
   to { translate: 0 calc(-1 * var(--chapter-drift)); }
@@ -96,4 +85,3 @@
   from { opacity: 0; transform: translateY(var(--page-enter-y)); }
   to { opacity: 1; transform: none; }
 }
-
