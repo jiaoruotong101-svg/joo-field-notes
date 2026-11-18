@@ -47,7 +47,7 @@ For the three-form opening, test Field → JOO → Orbit → Field, direct selec
 
 The live portfolio is https://joo-field-notes.vercel.app (alias: https://joo-field-notes-jdd12.vercel.app). It belongs to the Vercel project jdd12/joo-field-notes. The first production release deploys application commit 62a93e469c5ed418aeacaa8706d617a215762e8b from this repository.
 
-The original release was uploaded using the authenticated Vercel CLI. Native Git integration still reports a missing GitHub Login Connection. The alternative .github/workflows/vercel.yml deploys from GitHub Actions on pushes to main and manual dispatch. It targets the existing project, runs six fixture checks and builds production output before publishing. It is prepared but cannot deploy until VERCEL_DEPLOY_TOKEN is configured. Do not commit .vercel or login credentials.
+The original release was uploaded using the authenticated Vercel CLI. Native Git integration remains unlinked; the connected GitHub identity is JOO5216, a collaborator rather than the owner of this personal repository. The alternative .github/workflows/vercel.yml deploys from GitHub Actions on pushes to main and manual dispatch. It targets the existing project, runs six fixture checks and builds production output before publishing. VERCEL_DEPLOY_TOKEN is configured in the main-only vercel-production environment. The first successful Actions deployment published commit 765bedd660a9dd9ed805b74e1e480450a2ef8c50 on 2026-11-18 (run 44296906757). Do not commit .vercel or login credentials.
 
 ## GitHub Pages production
 
@@ -57,15 +57,19 @@ The repository Pages build source is GitHub Actions. The checked-in .github/work
 
 Run npm run build:pages to build this variant. The output includes five project directory entries, a custom 404 entry and .nojekyll. Serve dist under /joo-field-notes/ using an ordinary static server to verify it: a SPA fallback can hide missing-page errors. Test the canonical /projects/<slug>/ URLs, direct entry and reload, fonts, MP4 playback, QC frames, Huahua atlas, three signal forms and persisted home state on desktop and touch. State is scoped to the deployed base so a different project on the same github.io origin cannot accidentally share this archive's navigation record.
 
-The Vercel site remains available. GitHub Pages publishes automatically from main; the Vercel Actions workflow needs the credential setup below before automatic publication works. Keeping the repository and Pages service enabled is required; this is not a guarantee of permanent availability.
+The Vercel site remains available. GitHub Pages publishes automatically from main; the Vercel Actions workflow also publishes automatically from main using its environment Secret. Keeping the repository and Pages service enabled is required; this is not a guarantee of permanent availability.
 
 ## Vercel Actions credential setup
 
 The repository variables VERCEL_ORG_ID and VERCEL_PROJECT_ID target team_LdihCAyU1dGqn9EyrIDNamRI / prj_PKuKqRHbBRrFiF8BIXemqyAa2oy2. The vercel-production GitHub environment permits deployments from main only. The CLI is pinned to 66.0.0, actions are pinned to commit SHAs, and checkout does not retain Git credentials.
 
-1. Sign in to the Vercel account owning jdd12/joo-field-notes (the currently authenticated CLI account is 3511963332@qq.com). At https://vercel.com/account/settings/tokens create a dedicated deployment token, using the narrowest available scope for this project/team. Record its expiration; renew it in GitHub before expiry.
+1. Sign in to the Vercel account owning jdd12/joo-field-notes (the currently authenticated CLI account is 3511963332@qq.com). At https://vercel.com/account/settings/tokens create a dedicated deployment token, with team scope JDD / jdd12. Do not select the joo-field-notes project-only scope: this pull/build/deploy CLI flow also queries account/team resources, and the project-scoped credential failed authorization in CI. Record its expiration; renew it in GitHub before expiry.
 2. Open https://github.com/jiaoruotong101-svg/joo-field-notes/settings/environments and select vercel-production. Under Environment secrets add VERCEL_DEPLOY_TOKEN with that token. Enter it directly in GitHub; never paste it into chat, source files or workflow YAML.
 3. Open https://github.com/jiaoruotong101-svg/joo-field-notes/actions/workflows/vercel.yml and run the workflow on main (or rerun the failed setup run).
 4. Confirm both Deploy Vercel and Deploy GitHub Pages succeed for the same main commit. Check https://joo-field-notes.vercel.app and the Pages URL above, including direct detail reloads on desktop and mobile.
 
-This is Actions-based deployment, not a claim that native Vercel Git integration is connected. After activation, ordinary pushes to main trigger both workflows independently; a failed deployment on one platform does not roll back the other. Review both workflow results before considering a release complete. No PR or fork event receives the deployment token. Do not upload pulled .vercel configuration as an artifact.
+This is Actions-based deployment, not a claim that native Vercel Git integration is connected. Ordinary pushes to main trigger both workflows independently; a failed deployment on one platform does not roll back the other. Review both workflow results before considering a release complete. No PR or fork event receives the deployment token. Do not upload pulled .vercel configuration as an artifact.
+
+## Troubleshooting Vercel authorization
+
+A stored Secret can exist while its scope is incompatible. The project-only token returned HTTP 403 in scripts/check-vercel-access.mjs; the team-scoped replacement passed project identity validation and the complete CLI production deployment. Do not infer that every CLI "token is not valid" error means a copy mistake. Check scope, expiration and the target team. The diagnostic logs only project access status and never the credential value. Token rotation requires replacing VERCEL_DEPLOY_TOKEN in the vercel-production environment; ordinary site updates require no login.

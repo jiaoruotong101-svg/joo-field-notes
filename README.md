@@ -194,4 +194,5 @@ Use npm run build:pages for the subdirectory deployment; npm run build retains t
 
 ## Vercel automatic deployment
 
-.github/workflows/vercel.yml prepares the second production pipeline on pushes to main. It uses the existing Vercel project and the same six fixture checks as Pages. Activation is pending the VERCEL_DEPLOY_TOKEN environment secret; follow [credential setup](DEPLOYMENT.md#vercel-actions-credential-setup). Until its first successful run, only Pages automatic publication is verified. Both pipelines run independently, with Node.js 24 and different hosting base paths.
+.github/workflows/vercel.yml runs the second production pipeline on pushes to main. It uses the existing Vercel project and the same six fixture checks as Pages. VERCEL_DEPLOY_TOKEN is configured in the vercel-production environment; the first successful production run is [44296906757](https://github.com/jiaoruotong101-svg/joo-field-notes/actions/runs/44296906757). See [credential setup and rotation](DEPLOYMENT.md#vercel-actions-credential-setup). Both pipelines run independently, with Node.js 24 and different hosting base paths.
+
