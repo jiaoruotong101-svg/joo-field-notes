@@ -1,3 +1,4 @@
+import { sitePath } from '../sitePaths'
 import { readHomeState, rememberGrowth } from '../homeState'
 import { useState } from 'react'
 import { projects } from '../content/projects'
@@ -50,7 +51,7 @@ export default function GrowthTimeline() {
       </header>
       <div className="growth-board">
         <div className="growth-map" role="group" aria-label="Growth timeline nodes">
-          <img src="/illustrations/field-constellation.svg" alt="" width={480} height={296} loading="lazy" decoding="async" />
+          <img src={sitePath("/illustrations/field-constellation.svg")} alt="" width={480} height={296} loading="lazy" decoding="async" />
           <span className="growth-aura" aria-hidden="true" style={coordinates(active)} />
           {nodes.map((node) => (
             <button
@@ -74,7 +75,7 @@ export default function GrowthTimeline() {
             <p>{active.description}</p>
             <ul>
               {active.links.map((link) => (
-                <li key={link.href}><a href={link.href}>{link.label}<span aria-hidden="true">{link.href.startsWith('#') ? '↗' : '→'}</span></a></li>
+                <li key={link.href}><a href={sitePath(link.href)}>{link.label}<span aria-hidden="true">{link.href.startsWith('#') ? '↗' : '→'}</span></a></li>
               ))}
             </ul>
           </div>

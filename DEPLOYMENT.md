@@ -8,7 +8,7 @@ npm run build
 npm run preview -- --host 127.0.0.1
 ```
 
-The output directory is `dist/`. The site uses the origin root for its routes and public assets. It has no server routes, environment variables, model endpoints, or analytics collectors.
+The output directory is `dist/`. The default build uses the origin root; the GitHub Pages build uses /joo-field-notes/ for routes and public assets. It has no server routes, environment variables, model endpoints, or analytics collectors.
 
 ## Static routing
 
@@ -48,3 +48,13 @@ For the three-form opening, test Field → JOO → Orbit → Field, direct selec
 The live portfolio is https://joo-field-notes.vercel.app (alias: https://joo-field-notes-jdd12.vercel.app). It belongs to the Vercel project jdd12/joo-field-notes. The first production release deploys application commit 62a93e469c5ed418aeacaa8706d617a215762e8b from this repository.
 
 The release was uploaded using the authenticated Vercel CLI. GitHub automatic deployment is not connected: Vercel reported that the account first needs a GitHub Login Connection. Until that connection and repository integration are configured, pushing main updates GitHub only. Deploy future releases explicitly with vercel deploy --prod --scope jdd12 from the linked checkout after validation. Do not commit .vercel or login credentials.
+
+## GitHub Pages production
+
+Public URL: https://jiaoruotong101-svg.github.io/joo-field-notes/
+
+The repository Pages build source is GitHub Actions. The checked-in .github/workflows/pages.yml publishes on pushes to main and supports workflow_dispatch. Build and deploy jobs have separate minimum permissions; the deploy job uses the github-pages environment and GitHub OIDC. Action versions are pinned to verified release commits. No separate hosting login is required for visitors or routine pushes.
+
+Run npm run build:pages to build this variant. The output includes five project directory entries, a custom 404 entry and .nojekyll. Serve dist under /joo-field-notes/ using an ordinary static server to verify it: a SPA fallback can hide missing-page errors. Test the canonical /projects/<slug>/ URLs, direct entry and reload, fonts, MP4 playback, QC frames, Huahua atlas, three signal forms and persisted home state on desktop and touch. State is scoped to the deployed base so a different project on the same github.io origin cannot accidentally share this archive's navigation record.
+
+The Vercel site remains available. GitHub Pages publishes automatically from main; the Vercel mirror still uses manual publication until its GitHub login connection is configured. Keeping the repository and Pages service enabled is required; this is not a guarantee of permanent availability.

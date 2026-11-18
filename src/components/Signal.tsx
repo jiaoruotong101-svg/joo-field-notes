@@ -1,3 +1,4 @@
+import { sitePath } from '../sitePaths'
 import { signalForms, type SignalForm } from '../scene/forms'
 import { StaticSignalOrbit } from './StaticSignalOrbit'
 import { lazy, Suspense, useEffect, useRef, useState, type PointerEvent } from 'react'
@@ -123,8 +124,8 @@ export function Signal() {
         onClick={(event) => { if (!orbit || event.detail === 0 || !press.current.moved) morph() }}
       >
         <picture className="signal-poster" aria-hidden="true">
-          <source media="(max-width: 740px)" srcSet="/signal-still-mobile.webp" />
-          <img src="/signal-still.webp" width={650} height={543} alt="" fetchPriority="high" />
+          <source media="(max-width: 740px)" srcSet={sitePath("/signal-still-mobile.webp")} />
+          <img src={sitePath("/signal-still.webp")} width={650} height={543} alt="" fetchPriority="high" />
         </picture>
         <span className="signal-static-glyph" aria-hidden="true">JOO</span>
         {form === 2 && state !== 'live' && <StaticSignalOrbit />}

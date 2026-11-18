@@ -1,6 +1,7 @@
+import { sitePath } from '../sitePaths'
 import { clip, faceVerdict, sampleTime, type Sample } from './fixture'
 
-export const frameSheet = '/qc/studio-run.webp'
+export const frameSheet = sitePath('/qc/studio-run.webp')
 
 const ink = { pass: '#a8f2d1', fail: '#ff8796', hold: '#f5ce91' }
 const panels: Record<number, [number, number]> = { 10: [0, 554], 50: [555, 557], 90: [1113, 559] }

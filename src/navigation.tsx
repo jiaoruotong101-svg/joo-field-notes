@@ -1,3 +1,4 @@
+import { appHref, appPathname, sitePath } from './sitePaths'
 import { captureHomeState, homeRestoreY, homeStateReady, readHomeState, waitForHomeState } from './homeState'
 import { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
@@ -8,7 +9,7 @@ type Entry = { path: string; key: string }
 let entrySequence = 0
 // LAN previews on a phone may run outside a secure context.
 const newKey = () => typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : "archive-" + Date.now() + '-' + ++entrySequence
-const entry = (): Entry => ({ path: location.pathname.replace(/\/$/, ''), key: history.state?.archiveKey || newKey() })
+const entry = (): Entry => ({ path: (appPathname() ?? '/not-found'), key: history.state?.archiveKey || newKey() })
 
 export function ArchiveRouter() {
   const [route, setRoute] = useState(entry)
@@ -36,7 +37,7 @@ export function ArchiveRouter() {
     }
 
     async function go(url: URL, pop = false, point = { x: innerWidth * .8, y: innerHeight * .7 }, restoreHome = false) {
-      const path = url.pathname.replace(/\/$/, '')
+      const path = (appPathname(url.pathname) ?? '/not-found')
       const version = ++navigationVersion
       const outgoing = current.current
       if (!pop) save()
@@ -72,7 +73,7 @@ export function ArchiveRouter() {
         dispatchEvent(new Event('resize'))
         dispatchEvent(new Event('archive:restore'))
         const scope = document.getElementById(snapshot?.anchorId || 'main')
-        const savedLink = snapshot?.focusHref ? Array.from(scope?.querySelectorAll<HTMLAnchorElement>('a[href]') || []).find(link => link.getAttribute('href') === snapshot.focusHref) : null
+        const savedLink = snapshot?.focusHref ? Array.from(scope?.querySelectorAll<HTMLAnchorElement>('a[href]') || []).find(link => appHref(link.getAttribute('href')) === snapshot.focusHref) : null
         const focus = !path && restoreHome ? savedLink || home.current?.focus || document.getElementById('main') : document.getElementById(path ? 'project' : url.hash.slice(1) || 'main')
         focus?.focus({ preventScroll: true })
       }
@@ -105,18 +106,18 @@ export function ArchiveRouter() {
       const anchor = (event.target as Element)?.closest<HTMLAnchorElement>('a[href]')
       if (!anchor || anchor.hasAttribute('download') || anchor.target && anchor.target !== '_self') return
       let url = new URL(anchor.href)
-      if (url.origin !== location.origin || !(url.pathname === '/' || url.pathname.startsWith('/projects/'))) return
-      if (url.pathname.replace(/\/$/, '') === current.current.path) return
+      if (url.origin !== location.origin || !(appPathname(url.pathname) === '' || appPathname(url.pathname)?.startsWith('/projects/'))) return
+      if ((appPathname(url.pathname) ?? '/not-found') === current.current.path) return
       event.preventDefault()
       const restore = anchor.hasAttribute('data-return-home') && !!home.current
-      if (restore) url = new URL(home.current!.href, location.origin)
+      if (restore) url = new URL(sitePath(home.current!.href), location.origin)
       const box = anchor.getBoundingClientRect()
       const point = event.detail ? { x: event.clientX, y: event.clientY } : { x: box.left + box.width / 2, y: box.top + box.height / 2 }
       void go(url, false, point, restore)
     }
     function pop() {
       positions.current.set(current.current.key, scrollY)
-      void go(new URL(location.href), true, undefined, !location.pathname.replace(/\/$/, ''))
+      void go(new URL(location.href), true, undefined, !(appPathname() ?? '/not-found'))
     }
     function hash() {
       if (history.state?.archiveKey === current.current.key) return

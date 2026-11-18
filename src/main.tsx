@@ -1,3 +1,4 @@
+import { appPathname } from './sitePaths'
 import { flushSync } from 'react-dom'
 import { createRoot } from 'react-dom/client'
 import '@fontsource-variable/eb-garamond/wght.css'
@@ -12,5 +13,5 @@ import { ArchiveRouter } from './navigation'
 
 
 const root = createRoot(document.getElementById('root')!)
-document.documentElement.classList.toggle('archive-home', location.pathname === '/')
+document.documentElement.classList.toggle('archive-home', appPathname() === '')
 flushSync(() => root.render(<ArchiveRouter />))

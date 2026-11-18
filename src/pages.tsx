@@ -1,3 +1,4 @@
+import { sitePath } from './sitePaths'
 import { RememberedDetails } from './components/RememberedDetails'
 import { ProjectIllustration } from './components/ProjectIllustration'
 import { Fragment, lazy, Suspense, useEffect, useLayoutEffect, type CSSProperties } from 'react'
@@ -17,11 +18,11 @@ const CrawlerDemo = lazy(() => import('./crawler/CrawlerDemo'))
 const HuahuaPlayground = lazy(() => import('./huahua/HuahuaPlayground'))
 
 function Header({ home }: { home: boolean }) {
-  const root = home ? '' : '/'
+  const root = home ? '' : sitePath('/')
   return (
     <header className="masthead wrap">
       <ScrollTrace />
-      <a className="brand mono" href={home ? '#top' : '/'}><span className="brand-mark" aria-hidden="true">✳</span> JOO <span className="brand-divider">/</span> FIELD NOTES</a>
+      <a className="brand mono" href={home ? '#top' : sitePath('/')}><span className="brand-mark" aria-hidden="true">✳</span> JOO <span className="brand-divider">/</span> FIELD NOTES</a>
       <nav aria-label="Main navigation" className="mono">
         <a href={`${root}#work`}>Work</a>
         <a href={`${root}#research`}>Research</a>
@@ -172,7 +173,7 @@ export function Home() {
               <ol className="project-index">
                 {projects.map((project) => (
                   <li key={project.slug} className="project-row">
-                    <a href={`/projects/${project.slug}`}>
+                    <a href={sitePath(`/projects/${project.slug}`)}>
                       <span className="mono project-number">{project.number}</span>
                       <span className="project-name">{project.name}</span>
                       <span className="project-summary">{project.summary}</span>
@@ -197,7 +198,7 @@ export function Home() {
                 <RememberedDetails id="research-work"><summary>Research and case work</summary><p>CMAU annual conference paper acceptance, a smart elderly care case study, and an information resource management case competition.</p></RememberedDetails>
                 <RememberedDetails id="research-interests"><summary>Current research interests</summary><p>Multimodal AI, digital humans, speech-driven gesture and dynamic point clouds.</p></RememberedDetails>
               </div>
-              <img className="essay-illustration" src="/illustrations/disclosure-timing.svg" width={480} height={296} loading="lazy" decoding="async" alt="Three diagrams show algorithmic disclosure before, during and after the same decision window." />
+              <img className="essay-illustration" src={sitePath("/illustrations/disclosure-timing.svg")} width={480} height={296} loading="lazy" decoding="async" alt="Three diagrams show algorithmic disclosure before, during and after the same decision window." />
             </div>
           </section>
           <section className="disclosure wrap" id="disclosure-experiment" tabIndex={-1} aria-labelledby="disclosure-title">
@@ -213,7 +214,7 @@ export function Home() {
                 <p>The inspection workflow looks at timing, entity labels, duplicates and consistency across tables before delivery.</p>
                 <a className="text-link" href="#caption-inspection">Try the caption inspection <span aria-hidden="true">↓</span></a>
               </div>
-              <img className="essay-illustration" src="/illustrations/caption-timeline.svg" width={480} height={296} loading="lazy" decoding="async" alt="A sample video timeline flags the uncovered second between two caption segments." />
+              <img className="essay-illustration" src={sitePath("/illustrations/caption-timeline.svg")} width={480} height={296} loading="lazy" decoding="async" alt="A sample video timeline flags the uncovered second between two caption segments." />
             </div>
           </section>
           <section className="caption-inspection wrap" id="caption-inspection" tabIndex={-1} aria-labelledby="caption-inspection-title">
@@ -264,7 +265,7 @@ export function ProjectPage({ project }: { project: (typeof projects)[number] | 
       <a className="skip" href="#project">Skip to project</a>
       <Header home={false} />
       <main id="project" tabIndex={-1} className={['project-page', 'wrap', isVisualData && 'project-page-qc', isResume && 'project-page-resume', isCrawler && 'project-page-crawler', isHuahua && 'project-page-huahua'].filter(Boolean).join(' ')}>
-        <a className="back mono" data-return-home href="/#work">← Selected work</a>
+        <a className="back mono" data-return-home href={sitePath("/#work")}>← Selected work</a>
         {project ? (
           <article>
             <div className="project-intro"><div><p className="chapter mono"><span /> {project.number} / {project.label}</p>

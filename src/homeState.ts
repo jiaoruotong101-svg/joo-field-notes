@@ -1,3 +1,5 @@
+import { appHref, siteBase } from './sitePaths'
+
 /** Tab-scoped UI state only. No résumé, feedback or form data is stored. */
 export type HomeSnapshot = {
   version: 1
@@ -11,7 +13,7 @@ export type HomeSnapshot = {
   growthNode: string
   demos: string[]
 }
-const key = 'joo:home-state:v1'
+const key = 'joo:home-state:v1' + (siteBase === '/' ? '' : siteBase)
 const detailIds = ['research-work', 'research-interests', 'caption-checks', 'caption-transcript']
 const demoIds = ['disclosure-experiment', 'caption-inspection', 'growth-timeline']
 const nodeIds = ['management', 'research', 'engineering', 'projects', 'huahua']
@@ -54,8 +56,8 @@ export function captureHomeState(entryKey: string): HomeSnapshot {
     if (candidate <= scrollY + 100 && candidate >= top) { anchorId = id; top = candidate }
   }
   const active = document.activeElement
-  write({ href: location.pathname + location.hash, y: scrollY, entryKey, anchorId, offset: scrollY - top,
-    focusHref: active instanceof HTMLAnchorElement && active.closest('#main') ? active.getAttribute('href') : null })
+  write({ href: appHref(location.href) || '/', y: scrollY, entryKey, anchorId, offset: scrollY - top,
+    focusHref: active instanceof HTMLAnchorElement && active.closest('#main') ? appHref(active.getAttribute('href')) : null })
   return memory!
 }
 export function homeRestoreY(state: HomeSnapshot) {

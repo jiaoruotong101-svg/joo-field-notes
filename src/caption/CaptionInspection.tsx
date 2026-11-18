@@ -1,10 +1,11 @@
+import { sitePath } from '../sitePaths'
 import { RememberedDetails } from '../components/RememberedDetails'
 import { useRef, useState } from 'react'
 import { annotations, checkAnnotations, clip, evidence, personLabel, segmentAt, timecode, type Finding } from './timeline'
 import './caption.css'
 
-const mediaPath = '/caption/studio.mp4?v=face-ellipse-3'
-const posterPath = '/caption/studio-poster.webp?v=face-ellipse-3'
+const mediaPath = sitePath('/caption/studio.mp4?v=face-ellipse-3')
+const posterPath = sitePath('/caption/studio-poster.webp?v=face-ellipse-3')
 const ticks = [0, 2, 4, 6, 8, 10, 12]
 
 export default function CaptionInspection() {

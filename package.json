@@ -12,7 +12,8 @@
     "check:crawler": "node --experimental-strip-types scripts/check-crawler-demo.mjs",
     "check:huahua": "node --experimental-strip-types scripts/check-huahua.mjs",
     "check:disclosure": "node --experimental-strip-types scripts/check-disclosure.mjs",
-    "check:caption": "node --experimental-strip-types scripts/check-caption-inspection.mjs"
+    "check:caption": "node --experimental-strip-types scripts/check-caption-inspection.mjs",
+    "build:pages": "tsc --noEmit && vite build --mode github-pages && node --experimental-strip-types scripts/prepare-pages.mjs"
   },
   "dependencies": {
     "@fontsource-variable/eb-garamond": "^5.3.0",

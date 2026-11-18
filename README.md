@@ -1,6 +1,8 @@
 # JOO / FIELD NOTES
 
-Live site: https://joo-field-notes.vercel.app
+GitHub Pages: https://jiaoruotong101-svg.github.io/joo-field-notes/
+
+Vercel mirror: https://joo-field-notes.vercel.app
 
 Phase 1–4 of an English-language interactive portfolio for JOO. The first page presents a live WebGL signal and leads into a six-chapter archive. Each of the five selected works has a direct URL and a repository link.
 
@@ -183,3 +185,9 @@ The original living field, the JOO glyph and a braided orbital ring share one Po
 The ice-blue chapter dot now rests near the upper-right viewport edge (97% / 18%), away from the opening cloud. The other ice-blue seed sits at the left margin. Both retain their chapter transition role. The hero uses overflow: clip to keep keyboard focus from horizontally scrolling the oversized canvas inside its composition.
 
 Production-preview checks at 1440px and simulated 390px touch covered all three live forms, direct and cyclic input, rapid selection, drag without an accidental form change, pause/resume, visible static alternatives with reduced motion or disabled WebGL, console errors, overflow and hero axe rules. The mobile static SVG was also rasterized to confirm that its dots paint. These are browser-emulation checks, not physical-device performance measurements.
+
+## GitHub Pages
+
+Pushes to main run .github/workflows/pages.yml: the workflow installs the locked dependencies, verifies the six interactive fixtures, builds for /joo-field-notes/, then publishes the Pages artifact. No personal access token or Vercel login is stored in the workflow. The Pages settings use GitHub Actions as their build source.
+
+Use npm run build:pages for the subdirectory deployment; npm run build retains the Vercel/origin-root output. src/sitePaths.ts centralizes public asset URLs, internal links and router normalization. Navigation state stores application-relative paths in a base-scoped session key. scripts/prepare-pages.mjs writes a physical projects/<slug>/index.html for each structured project so direct visits and reloads return a real static page, without a server rewrite or a redirect-through-404 workaround.
