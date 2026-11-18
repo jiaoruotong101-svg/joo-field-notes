@@ -191,3 +191,7 @@ Production-preview checks at 1440px and simulated 390px touch covered all three 
 Pushes to main run .github/workflows/pages.yml: the workflow installs the locked dependencies, verifies the six interactive fixtures, builds for /joo-field-notes/, then publishes the Pages artifact. No personal access token or Vercel login is stored in the workflow. The Pages settings use GitHub Actions as their build source.
 
 Use npm run build:pages for the subdirectory deployment; npm run build retains the Vercel/origin-root output. src/sitePaths.ts centralizes public asset URLs, internal links and router normalization. Navigation state stores application-relative paths in a base-scoped session key. scripts/prepare-pages.mjs writes a physical projects/<slug>/index.html for each structured project so direct visits and reloads return a real static page, without a server rewrite or a redirect-through-404 workaround.
+
+## Vercel automatic deployment
+
+.github/workflows/vercel.yml prepares the second production pipeline on pushes to main. It uses the existing Vercel project and the same six fixture checks as Pages. Activation is pending the VERCEL_DEPLOY_TOKEN environment secret; follow [credential setup](DEPLOYMENT.md#vercel-actions-credential-setup). Until its first successful run, only Pages automatic publication is verified. Both pipelines run independently, with Node.js 24 and different hosting base paths.
